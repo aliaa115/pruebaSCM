@@ -1,903 +1,768 @@
-CREATE DATABASE  IF NOT EXISTS `erp` /*!40100 DEFAULT CHARACTER SET utf8 */ /*!80016 DEFAULT ENCRYPTION='N' */;
-USE `erp`;
--- MySQL dump 10.13  Distrib 8.0.19, for Win64 (x86_64)
---
--- Host: 127.0.0.1    Database: erp
--- ------------------------------------------------------
--- Server version	8.0.19
 
---
--- Table structure for table `acreedores`
---
+-- -----------------------------------------------------
+-- Schema erp
+-- -----------------------------------------------------
+DROP DATABASE IF EXISTS `erp`;
+CREATE SCHEMA IF NOT EXISTS `erp` DEFAULT CHARACTER SET utf8 ;
+USE `erp` ;
 
-DROP TABLE IF EXISTS `acreedores`;
-CREATE TABLE `acreedores` (
-  `id_acreedor` int NOT NULL AUTO_INCREMENT,
-  `id_contacto` int NOT NULL,
-  `nombre_acreedor` varchar(45) DEFAULT NULL,
-  `descripcion_acreedor` text,
-  `direccion_acreedor` varchar(45) DEFAULT NULL,
-  `pagina_acreedor` varchar(45) DEFAULT NULL,
-  `ESTADO` tinyint DEFAULT '1',
+-- -----------------------------------------------------
+-- Table `erp`.`contactos`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `erp`.`contactos` (
+  `id_contacto` INT NOT NULL AUTO_INCREMENT,
+  `nombre_contacto` VARCHAR(45) NULL DEFAULT NULL,
+  `descripcion_contacto` TEXT NULL DEFAULT NULL,
+  `telefono_contacto` VARCHAR(45) NULL DEFAULT NULL,
+  `direccion_contacto` VARCHAR(45) NULL DEFAULT NULL,
+  `email_contacto` VARCHAR(45) NULL DEFAULT NULL,
+  `ESTADO` TINYINT NULL DEFAULT '1',
+  PRIMARY KEY (`id_contacto`))
+ENGINE = InnoDB
+AUTO_INCREMENT = 2
+DEFAULT CHARACTER SET = utf8;
+
+
+-- -----------------------------------------------------
+-- Table `erp`.`acreedores`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `erp`.`acreedores` (
+  `id_acreedor` INT NOT NULL AUTO_INCREMENT,
+  `id_contacto` INT NOT NULL,
+  `nombre_acreedor` VARCHAR(45) NULL DEFAULT NULL,
+  `descripcion_acreedor` TEXT NULL DEFAULT NULL,
+  `direccion_acreedor` VARCHAR(45) NULL DEFAULT NULL,
+  `pagina_acreedor` VARCHAR(45) NULL DEFAULT NULL,
+  `ESTADO` TINYINT NULL DEFAULT '1',
   PRIMARY KEY (`id_acreedor`),
-  KEY `fk_servicios_contactos1` (`id_contacto`),
-  CONSTRAINT `fk_servicios_contactos1` FOREIGN KEY (`id_contacto`) REFERENCES `contactos` (`id_contacto`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `acreedores`
---
-
-LOCK TABLES `acreedores` WRITE;
-INSERT INTO `acreedores` VALUES (1,1,'ACREEDOR PRUEBA','Acreedor para pruebas de funcionalidad de Software','direccion','acreedor.com',1);
-UNLOCK TABLES;
-
---
--- Table structure for table `acreedores_servicios`
---
-
-DROP TABLE IF EXISTS `acreedores_servicios`;
-CREATE TABLE `acreedores_servicios` (
-  `id_acreedor` int NOT NULL,
-  `id_servicio` int NOT NULL,
-  PRIMARY KEY (`id_acreedor`,`id_servicio`),
-  KEY `fk_acreedores_has_servicios_servicios1` (`id_servicio`),
-  CONSTRAINT `fk_acreedores_has_servicios_acreedores1` FOREIGN KEY (`id_acreedor`) REFERENCES `acreedores` (`id_acreedor`),
-  CONSTRAINT `fk_acreedores_has_servicios_servicios1` FOREIGN KEY (`id_servicio`) REFERENCES `servicios` (`id_servicio`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `acreedores_servicios`
---
-
-LOCK TABLES `acreedores_servicios` WRITE;
-UNLOCK TABLES;
-
---
--- Table structure for table `ayuda`
---
-
-DROP TABLE IF EXISTS `ayuda`;
-CREATE TABLE `ayuda` (
-  `Id_ayuda` int NOT NULL,
-  `Ruta` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
-  `indice` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
---
--- Dumping data for table `ayuda`
---
-
-LOCK TABLES `ayuda` WRITE;
-INSERT INTO `ayuda` VALUES (1,'Página web ayuda/ayuda.chm','menu.html'),(2,'Página web ayuda/ayuda.chm','Menúboletos.html');
-UNLOCK TABLES;
-
---
--- Table structure for table `bodegas`
---
-
-DROP TABLE IF EXISTS `bodegas`;
-CREATE TABLE `bodegas` (
-  `id_bodega` int NOT NULL AUTO_INCREMENT,
-  `nombre_bodega` varchar(45) DEFAULT NULL,
-  `descripcion_bodega` text,
-  `ubicacion_bodega` varchar(45) DEFAULT NULL,
-  `stock_maximo` int DEFAULT NULL,
-  `ESTADO` tinyint DEFAULT '1',
-  PRIMARY KEY (`id_bodega`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `bodegas`
---
-
-LOCK TABLES `bodegas` WRITE;
-INSERT INTO `bodegas` VALUES (1,'BODEGA PRUEBA','Bodega para pruebas de funcionalidad de Software','ubicacion',0,1);
-UNLOCK TABLES;
-
---
--- Table structure for table `categorias`
---
-
-DROP TABLE IF EXISTS `categorias`;
-CREATE TABLE `categorias` (
-  `id_categoria` int NOT NULL AUTO_INCREMENT,
-  `nombre_categoria` varchar(45) DEFAULT NULL,
-  `descripcion_categoria` text,
-  `ESTADO` tinyint DEFAULT '1',
-  PRIMARY KEY (`id_categoria`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `categorias`
---
-
-LOCK TABLES `categorias` WRITE;
-INSERT INTO `categorias` VALUES (1,'CATEGORIA PRUEBA','Categoria para pruebas de funcionalidad de Software',1);
-UNLOCK TABLES;
-
---
--- Table structure for table `contactos`
---
-
-DROP TABLE IF EXISTS `contactos`;
-CREATE TABLE `contactos` (
-  `id_contacto` int NOT NULL AUTO_INCREMENT,
-  `nombre_contacto` varchar(45) DEFAULT NULL,
-  `descripcion_contacto` text,
-  `telefono_contacto` varchar(45) DEFAULT NULL,
-  `direccion_contacto` varchar(45) DEFAULT NULL,
-  `email_contacto` varchar(45) DEFAULT NULL,
-  `ESTADO` tinyint DEFAULT '1',
-  PRIMARY KEY (`id_contacto`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `contactos`
---
-
-LOCK TABLES `contactos` WRITE;
-INSERT INTO `contactos` VALUES (1,'CONTACTO PRUEBA','Contacto para pruebas de funcionalidad de Software','12345678','direccion','email@123.com',1);
-UNLOCK TABLES;
-
---
--- Table structure for table `cotizaciones_detalle`
---
-
-DROP TABLE IF EXISTS `cotizaciones_detalle`;
-CREATE TABLE `cotizaciones_detalle` (
-  `id_cotizacion_detalle` int NOT NULL AUTO_INCREMENT,
-  `id_cotizacion_encabezado` int NOT NULL,
-  `id_proveedor` int NOT NULL,
-  `id_producto` int NOT NULL,
-  `cantidad_cotizacion` int DEFAULT NULL,
-  `precio_unitario_cotizacion` double DEFAULT NULL,
-  PRIMARY KEY (`id_cotizacion_detalle`,`id_cotizacion_encabezado`,`id_proveedor`,`id_producto`),
-  KEY `fk_cotizaciones_detalle_cotizaciones_encabezado1` (`id_cotizacion_encabezado`,`id_proveedor`),
-  KEY `fk_cotizaciones_detalle_productos1` (`id_producto`),
-  CONSTRAINT `fk_cotizaciones_detalle_cotizaciones_encabezado1` FOREIGN KEY (`id_cotizacion_encabezado`, `id_proveedor`) REFERENCES `cotizaciones_encabezado` (`id_cotizacion_encabezado`, `id_proveedor`),
-  CONSTRAINT `fk_cotizaciones_detalle_productos1` FOREIGN KEY (`id_producto`) REFERENCES `productos` (`id_producto`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `cotizaciones_detalle`
---
-
-LOCK TABLES `cotizaciones_detalle` WRITE;
-INSERT INTO `cotizaciones_detalle` VALUES (1,1,1,1,20,0.25),(2,1,1,2,30,0.01),(1,2,1,1,2000,0.23);
-UNLOCK TABLES;
-
---
--- Table structure for table `cotizaciones_encabezado`
---
-
-DROP TABLE IF EXISTS `cotizaciones_encabezado`;
-CREATE TABLE `cotizaciones_encabezado` (
-  `id_cotizacion_encabezado` int NOT NULL AUTO_INCREMENT,
-  `id_proveedor` int NOT NULL,
-  `nombre_cotizacion` varchar(45) DEFAULT NULL,
-  `descripcion_cotizacion` text,
-  `fecha_cotizacion` date DEFAULT NULL,
-  `fecha_caducidad` date DEFAULT NULL,
-  `ESTADO` tinyint DEFAULT '1',
-  PRIMARY KEY (`id_cotizacion_encabezado`,`id_proveedor`),
-  KEY `fk_cotizaciones_encabezado_proveedores1` (`id_proveedor`),
-  CONSTRAINT `fk_cotizaciones_encabezado_proveedores1` FOREIGN KEY (`id_proveedor`) REFERENCES `proveedores` (`id_proveedor`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `cotizaciones_encabezado`
---
-
-LOCK TABLES `cotizaciones_encabezado` WRITE;
-INSERT INTO `cotizaciones_encabezado` VALUES (1,1,'cotizacion prueba','descripcion de cotizacion prueba','2020-01-01','2022-01-10',1),(2,1,'cotizacion prueba 2','descripcion de cotizacion prueba','2020-01-01','2022-01-10',1);
-UNLOCK TABLES;
-
---
--- Table structure for table `creditos_pedidos_detalle`
---
-
-DROP TABLE IF EXISTS `creditos_pedidos_detalle`;
-CREATE TABLE `creditos_pedidos_detalle` (
-  `id_credito_pedido_detalle` int NOT NULL AUTO_INCREMENT,
-  `id_credito_pedido_encabezado` int NOT NULL,
-  `id_orden_compra_encabezado` int NOT NULL,
-  `id_cotizacion_encabezado` int NOT NULL,
-  `id_proveedor` int NOT NULL,
-  `fehca_inicio` date DEFAULT NULL,
-  `fecha_limite` date DEFAULT NULL,
-  `valor` double DEFAULT NULL,
-  `tipo_movimiento` int DEFAULT NULL,
-  PRIMARY KEY (`id_credito_pedido_detalle`,`id_credito_pedido_encabezado`,`id_orden_compra_encabezado`,`id_cotizacion_encabezado`,`id_proveedor`),
-  KEY `fk_creditos_pedidos_detalle_creditos_pedidos_encabezado1` (`id_credito_pedido_encabezado`,`id_orden_compra_encabezado`,`id_cotizacion_encabezado`,`id_proveedor`),
-  KEY `fk_creditos_pedidos_detalle_cuentas1` (`tipo_movimiento`),
-  CONSTRAINT `fk_creditos_pedidos_detalle_creditos_pedidos_encabezado1` FOREIGN KEY (`id_credito_pedido_encabezado`, `id_orden_compra_encabezado`, `id_cotizacion_encabezado`, `id_proveedor`) REFERENCES `creditos_pedidos_encabezado` (`id_credito_pedido_encabezado`, `id_orden_compra_encabezado`, `id_cotizacion_encabezado`, `id_proveedor`),
-  CONSTRAINT `fk_creditos_pedidos_detalle_cuentas1` FOREIGN KEY (`tipo_movimiento`) REFERENCES `cuentas` (`id_cuenta`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `creditos_pedidos_detalle`
---
-
-LOCK TABLES `creditos_pedidos_detalle` WRITE;
-UNLOCK TABLES;
-
---
--- Table structure for table `creditos_pedidos_encabezado`
---
-
-DROP TABLE IF EXISTS `creditos_pedidos_encabezado`;
-CREATE TABLE `creditos_pedidos_encabezado` (
-  `id_credito_pedido_encabezado` int NOT NULL AUTO_INCREMENT,
-  `id_orden_compra_encabezado` int NOT NULL,
-  `id_cotizacion_encabezado` int NOT NULL,
-  `id_proveedor` int NOT NULL,
-  `id_banco` int DEFAULT NULL,
-  `monto_total` double DEFAULT NULL,
-  `saldo_actual` double DEFAULT NULL,
-  `fecha_inicio` date DEFAULT NULL,
-  `numero_cuotas` int DEFAULT NULL,
-  `limite_cuotas` int DEFAULT NULL,
-  `ESTADO` tinyint DEFAULT '1',
-  PRIMARY KEY (`id_credito_pedido_encabezado`,`id_orden_compra_encabezado`,`id_cotizacion_encabezado`,`id_proveedor`),
-  KEY `fk_creditos_pedidos_encabezado_ordenes_compras_encabezado1` (`id_orden_compra_encabezado`,`id_cotizacion_encabezado`,`id_proveedor`),
-  KEY `fk_creditos_pedidos_encabezado_bancos` (`id_banco`),
-  CONSTRAINT `fk_creditos_pedidos_encabezado_bancos` FOREIGN KEY (`id_banco`) REFERENCES `bancos` (`PK_idBanco`),
-  CONSTRAINT `fk_creditos_pedidos_encabezado_ordenes_compras_encabezado1` FOREIGN KEY (`id_orden_compra_encabezado`, `id_cotizacion_encabezado`, `id_proveedor`) REFERENCES `ordenes_compras_encabezado` (`id_orden_compra_encabezado`, `id_cotizacion_encabezado`, `id_proveedor`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `creditos_pedidos_encabezado`
---
-
-LOCK TABLES `creditos_pedidos_encabezado` WRITE;
-UNLOCK TABLES;
-
---
--- Table structure for table `cuentas`
---
-
-DROP TABLE IF EXISTS `cuentas`;
-CREATE TABLE `cuentas` (
-  `id_cuenta` int NOT NULL AUTO_INCREMENT,
-  `id_tipo_cuenta` int NOT NULL,
-  `nombre` varchar(25) DEFAULT NULL,
-  `descripcion` varchar(45) DEFAULT NULL,
-  `estado` tinyint DEFAULT '1',
-  PRIMARY KEY (`id_cuenta`,`id_tipo_cuenta`),
-  KEY `fk_tbl_cuentas_contables_tbl_tipoCuentaContable1_idx` (`id_tipo_cuenta`),
-  CONSTRAINT `fk_tbl_cuentas_contables_tbl_tipoCuentaContable1` FOREIGN KEY (`id_tipo_cuenta`) REFERENCES `tipo_cuentas` (`id_tipo_cuenta`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `cuentas`
---
-
-LOCK TABLES `cuentas` WRITE;
-INSERT INTO `cuentas` VALUES (1,1,'cuenta','descripcion',1),(2,1,'cuenta2','descripcion',1);
-UNLOCK TABLES;
-
---
--- Table structure for table `devoluciones`
---
-
-DROP TABLE IF EXISTS `devoluciones`;
-CREATE TABLE `devoluciones` (
-  `id_devolucion` int NOT NULL AUTO_INCREMENT,
-  `id_orden_compra_encabezado` int NOT NULL,
-  `id_cotizacion_encabezado` int NOT NULL,
-  `id_proveedor` int NOT NULL,
-  `fecha_devolucion` date DEFAULT NULL,
-  `razon_devolucion` text,
-  `ESTADO` tinyint DEFAULT '1',
-  PRIMARY KEY (`id_devolucion`,`id_orden_compra_encabezado`,`id_cotizacion_encabezado`,`id_proveedor`),
-  KEY `fk_devoluciones_ordenes_compras_encabezado1` (`id_orden_compra_encabezado`,`id_cotizacion_encabezado`,`id_proveedor`),
-  CONSTRAINT `fk_devoluciones_ordenes_compras_encabezado1` FOREIGN KEY (`id_orden_compra_encabezado`, `id_cotizacion_encabezado`, `id_proveedor`) REFERENCES `ordenes_compras_encabezado` (`id_orden_compra_encabezado`, `id_cotizacion_encabezado`, `id_proveedor`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `devoluciones`
---
-
-LOCK TABLES `devoluciones` WRITE;
-UNLOCK TABLES;
-
---
--- Table structure for table `documentos`
---
-
-DROP TABLE IF EXISTS `documentos`;
-CREATE TABLE `documentos` (
-  `id_documento` int NOT NULL AUTO_INCREMENT,
-  `codigo_documento` int DEFAULT NULL,
-  `nombre_documento` varchar(45) DEFAULT NULL,
-  `tipo_documento` varchar(45) DEFAULT NULL,
-  `estado` tinyint DEFAULT '1',
-  PRIMARY KEY (`id_documento`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `documentos`
---
-
-LOCK TABLES `documentos` WRITE;
-INSERT INTO `documentos` VALUES (1,0,'Documento Prueba','Orden de Compra',1),(2,0,'Documento Prueba','Orden de Compra',1);
-UNLOCK TABLES;
-
---
--- Table structure for table `impuestos`
---
-
-DROP TABLE IF EXISTS `impuestos`;
-CREATE TABLE `impuestos` (
-  `id_impuesto` int NOT NULL AUTO_INCREMENT,
-  `nombre_impuesto` varchar(45) DEFAULT NULL,
-  `descripcion_impuesto` text,
-  `tasa_impuesto` double DEFAULT NULL,
-  `ESTADO` tinyint DEFAULT '1',
-  PRIMARY KEY (`id_impuesto`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `impuestos`
---
-
-LOCK TABLES `impuestos` WRITE;
-INSERT INTO `impuestos` VALUES (1,'IMPUESTO PRUEBA','Impuesto para pruebas de funcionalidad de Software',0.5,1);
-UNLOCK TABLES;
-
---
--- Table structure for table `inventarios`
---
-
-DROP TABLE IF EXISTS `inventarios`;
-CREATE TABLE `inventarios` (
-  `nombre_inventario` varchar(45) DEFAULT NULL,
-  `id_producto` int NOT NULL,
-  `id_bodega` int NOT NULL,
-  `descripcion_inventario` text,
-  `cantidad_maxima` int DEFAULT NULL,
-  `cantidad_minima` int DEFAULT NULL,
-  `numero_estanteria` int DEFAULT NULL,
-  `existencia_inventario` int DEFAULT NULL,
-  `ESTADO` tinyint DEFAULT '1',
-  PRIMARY KEY (`id_producto`,`id_bodega`),
-  KEY `fk_inventarios_bodegas1` (`id_bodega`),
-  CONSTRAINT `fk_inventarios_bodegas1` FOREIGN KEY (`id_bodega`) REFERENCES `bodegas` (`id_bodega`),
-  CONSTRAINT `fk_inventarios_productos1` FOREIGN KEY (`id_producto`) REFERENCES `productos` (`id_producto`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `inventarios`
---
-
-LOCK TABLES `inventarios` WRITE;
-INSERT INTO `inventarios` VALUES ('INVENTARIO PRUEBA',2,1,'Inventario para pruebas de funcionalidad de Software',800,2,2,90,1);
-UNLOCK TABLES;
-
---
--- Table structure for table `lineas`
---
-
-DROP TABLE IF EXISTS `lineas`;
-CREATE TABLE `lineas` (
-  `id_linea` int NOT NULL AUTO_INCREMENT,
-  `nombre_linea` varchar(45) DEFAULT NULL,
-  `descripcion_linea` text,
-  `ESTADO` tinyint DEFAULT '1',
-  PRIMARY KEY (`id_linea`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `lineas`
---
-
-LOCK TABLES `lineas` WRITE;
-INSERT INTO `lineas` VALUES (1,'LINEA PRUEBA','Linea para pruebas de funcionalidad de Software',1);
-UNLOCK TABLES;
-
---
--- Table structure for table `marcas`
---
-
-DROP TABLE IF EXISTS `marcas`;
-CREATE TABLE `marcas` (
-  `id_marca` int NOT NULL AUTO_INCREMENT,
-  `nombre_marca` varchar(45) DEFAULT NULL,
-  `descripcion_marca` text,
-  `ESTADO` tinyint DEFAULT '1',
-  PRIMARY KEY (`id_marca`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `marcas`
---
-
-LOCK TABLES `marcas` WRITE;
-INSERT INTO `marcas` VALUES (1,'MARCA PRUEBA','Marca para pruebas de funcionalidad de Software',1);
-UNLOCK TABLES;
-
---
--- Table structure for table `movimientos_inventario_detalle`
---
-
-DROP TABLE IF EXISTS `movimientos_inventario_detalle`;
-CREATE TABLE `movimientos_inventario_detalle` (
-  `id_movimiento_inventario_detalle` int NOT NULL AUTO_INCREMENT,
-  `id_movimiento_inventario_encabezado` int NOT NULL,
-  `id_producto` int NOT NULL,
-  `cantidad_movimiento` int DEFAULT NULL,
-  `costo_producto` double DEFAULT NULL,
-  `precio_producto` double DEFAULT NULL,
-  PRIMARY KEY (`id_movimiento_inventario_detalle`,`id_movimiento_inventario_encabezado`),
-  KEY `fk_movimientos_inventario_encabezado_productos1` (`id_producto`),
-  KEY `fk_movimientos_inventario_encabezado_movimientos_inventario_e1` (`id_movimiento_inventario_encabezado`),
-  CONSTRAINT `fk_movimientos_inventario_encabezado_movimientos_inventario_e1` FOREIGN KEY (`id_movimiento_inventario_encabezado`) REFERENCES `movimientos_inventario_encabezado` (`id_movimiento_inventario_encabezado`),
-  CONSTRAINT `fk_movimientos_inventario_encabezado_productos1` FOREIGN KEY (`id_producto`) REFERENCES `productos` (`id_producto`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `movimientos_inventario_detalle`
---
-
-LOCK TABLES `movimientos_inventario_detalle` WRITE;
-INSERT INTO `movimientos_inventario_detalle` VALUES (1,1,1,10,3.01,1),(1,2,1,10,4.5,1),(2,1,1,10,8.01,1),(2,2,1,10,0.8,1),(3,1,1,10,4.5,1),(3,2,1,10,0.05,1),(4,1,1,10,0.8,1),(5,1,1,10,0.05,1);
-UNLOCK TABLES;
-
---
--- Table structure for table `movimientos_inventario_encabezado`
---
-
-DROP TABLE IF EXISTS `movimientos_inventario_encabezado`;
-CREATE TABLE `movimientos_inventario_encabezado` (
-  `id_movimiento_inventario_encabezado` int NOT NULL AUTO_INCREMENT,
-  `id_tipo_movimiento` int NOT NULL,
-  `nombre_movimiento` varchar(45) DEFAULT NULL,
-  `descripcion_movimiento` text,
-  `fecha_movimiento` date DEFAULT NULL,
-  `bodaga_salida` int DEFAULT NULL,
-  `bodega_entrada` int DEFAULT NULL,
-  `id_orden_transporte_encabezado` int DEFAULT NULL,
-  `ESTADO` tinyint DEFAULT '1',
-  PRIMARY KEY (`id_movimiento_inventario_encabezado`),
-  KEY `fk_movimientos_inventario_encabezado_bodegas1` (`bodaga_salida`),
-  KEY `fk_movimientos_inventario_encabezado_bodegas2` (`bodega_entrada`),
-  KEY `fk_movimientos_inventario_encabezado_ordenes_transportes_enca1` (`id_orden_transporte_encabezado`),
-  KEY `fk_creditos_pedidos_detalle_cuentas` (`id_tipo_movimiento`),
-  CONSTRAINT `fk_creditos_pedidos_detalle_cuentas` FOREIGN KEY (`id_tipo_movimiento`) REFERENCES `cuentas` (`id_cuenta`),
-  CONSTRAINT `fk_movimientos_inventario_encabezado_bodegas1` FOREIGN KEY (`bodaga_salida`) REFERENCES `bodegas` (`id_bodega`),
-  CONSTRAINT `fk_movimientos_inventario_encabezado_bodegas2` FOREIGN KEY (`bodega_entrada`) REFERENCES `bodegas` (`id_bodega`),
-  CONSTRAINT `fk_movimientos_inventario_encabezado_ordenes_transportes_enca1` FOREIGN KEY (`id_orden_transporte_encabezado`) REFERENCES `ordenes_transportes` (`id_orden_transporte`),
-  CONSTRAINT `fk_movimientos_inventario_encabezado_tipos_movimientos1` FOREIGN KEY (`id_tipo_movimiento`) REFERENCES `tipos_movimientos` (`id_tipo_movimiento`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `movimientos_inventario_encabezado`
---
-
-LOCK TABLES `movimientos_inventario_encabezado` WRITE;
-INSERT INTO `movimientos_inventario_encabezado` VALUES (1,1,'movimiento','descripcion','2020-04-04',NULL,NULL,NULL,1),(2,1,'movimiento','descripcion','2010-05-04',NULL,NULL,NULL,1);
-UNLOCK TABLES;
-
---
--- Table structure for table `ordenes_compras_detalle`
---
-
-DROP TABLE IF EXISTS `ordenes_compras_detalle`;
-CREATE TABLE `ordenes_compras_detalle` (
-  `id_orden_compra_detalle` int NOT NULL AUTO_INCREMENT,
-  `id_orden_compra_encabezado` int NOT NULL,
-  `id_cotizacion_encabezado` int NOT NULL,
-  `id_proveedor` int NOT NULL,
-  `id_producto` int NOT NULL,
-  `cantidad` int DEFAULT NULL,
-  `precio_unitario` double DEFAULT NULL,
-  PRIMARY KEY (`id_orden_compra_detalle`,`id_orden_compra_encabezado`,`id_cotizacion_encabezado`,`id_proveedor`,`id_producto`),
-  KEY `fk_ordenes_compras_detalle_ordenes_compras_encabezado1` (`id_orden_compra_encabezado`,`id_cotizacion_encabezado`,`id_proveedor`),
-  KEY `fk_ordenes_compras_detalle_productos1` (`id_producto`),
-  CONSTRAINT `fk_ordenes_compras_detalle_ordenes_compras_encabezado1` FOREIGN KEY (`id_orden_compra_encabezado`, `id_cotizacion_encabezado`, `id_proveedor`) REFERENCES `ordenes_compras_encabezado` (`id_orden_compra_encabezado`, `id_cotizacion_encabezado`, `id_proveedor`),
-  CONSTRAINT `fk_ordenes_compras_detalle_productos1` FOREIGN KEY (`id_producto`) REFERENCES `productos` (`id_producto`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `ordenes_compras_detalle`
---
-
-LOCK TABLES `ordenes_compras_detalle` WRITE;
-/*!40000 ALTER TABLE `ordenes_compras_detalle` DISABLE KEYS */;
-INSERT INTO `ordenes_compras_detalle` VALUES (1,1,1,1,1,32,32.2),(2,1,1,1,2,20,21.02);
-/*!40000 ALTER TABLE `ordenes_compras_detalle` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `ordenes_compras_encabezado`
---
-
-DROP TABLE IF EXISTS `ordenes_compras_encabezado`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `ordenes_compras_encabezado` (
-  `id_orden_compra_encabezado` int NOT NULL AUTO_INCREMENT,
-  `id_proveedor` int NOT NULL,
-  `nombre_orden_compra` varchar(45) DEFAULT NULL,
-  `descripcion_orden_compra` text,
-  `fecha_emision` date DEFAULT NULL,
-  `fecha_entrega` date DEFAULT NULL,
-  `fecha_estimada_entrega` date DEFAULT NULL,
-  `entregado` int DEFAULT NULL,
-  `ESTADO` tinyint DEFAULT '1',
-  PRIMARY KEY (`id_orden_compra_encabezado`,`id_cotizacion_encabezado`,`id_proveedor`),
-  KEY `fk_ordenes_compras_encabezado_cotizaciones_encabezado1` (`id_cotizacion_encabezado`,`id_proveedor`),
-  CONSTRAINT `fk_ordenes_compras_encabezado_cotizaciones_encabezado1` FOREIGN KEY (`id_cotizacion_encabezado`, `id_proveedor`) REFERENCES `cotizaciones_encabezado` (`id_cotizacion_encabezado`, `id_proveedor`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `ordenes_compras_encabezado`
---
-
-LOCK TABLES `ordenes_compras_encabezado` WRITE;
-INSERT INTO `ordenes_compras_encabezado` VALUES (1,1,1,'Orden Compra Prueba',' ','2020-01-01','2020-02-03','2020-02-01',0,1);
-UNLOCK TABLES;
-
---
--- Table structure for table `ordenes_transportes`
---
-
-DROP TABLE IF EXISTS `ordenes_transportes`;
-CREATE TABLE `ordenes_transportes` (
-  `id_orden_transporte` int NOT NULL AUTO_INCREMENT,
-  `id_vehiculo` int NOT NULL,
-  `bodega_origen` int NOT NULL,
-  `bodega_destino` int NOT NULL,
-  `documentos_id_documento` int NOT NULL,
-  `fecha_salida` date DEFAULT NULL,
-  `fecha_llegada` date DEFAULT NULL,
-  `ESTADO` tinyint DEFAULT '1',
-  PRIMARY KEY (`id_orden_transporte`),
-  KEY `fk_ordenes_transportes_encabezado_vehiculos1` (`id_vehiculo`),
-  KEY `fk_ordenes_transportes_encabezado_bodegas1` (`bodega_origen`),
-  KEY `fk_ordenes_transportes_encabezado_bodegas2` (`bodega_destino`),
-  KEY `fk_ordenes_transportes_documentos1` (`documentos_id_documento`),
-  CONSTRAINT `fk_ordenes_transportes_documentos1` FOREIGN KEY (`documentos_id_documento`) REFERENCES `documentos` (`id_documento`),
-  CONSTRAINT `fk_ordenes_transportes_encabezado_bodegas1` FOREIGN KEY (`bodega_origen`) REFERENCES `bodegas` (`id_bodega`),
-  CONSTRAINT `fk_ordenes_transportes_encabezado_bodegas2` FOREIGN KEY (`bodega_destino`) REFERENCES `bodegas` (`id_bodega`),
-  CONSTRAINT `fk_ordenes_transportes_encabezado_vehiculos1` FOREIGN KEY (`id_vehiculo`) REFERENCES `vehiculos` (`id_vehiculo`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `ordenes_transportes`
---
-
-LOCK TABLES `ordenes_transportes` WRITE;
-UNLOCK TABLES;
-
---
--- Temporary view structure for view `poliza_movimiento`
---
-
-DROP TABLE IF EXISTS `poliza_movimiento`;
-SET @saved_cs_client     = @@character_set_client;
-SET character_set_client = @saved_cs_client;
-
---
--- Table structure for table `presentaciones`
---
-
-DROP TABLE IF EXISTS `presentaciones`;
-CREATE TABLE `presentaciones` (
-  `id_presentacion` int NOT NULL AUTO_INCREMENT,
-  `nombre_presentacion` varchar(45) DEFAULT NULL,
-  `descripcion_presentacion` text,
-  `ESTADO` tinyint DEFAULT '1',
-  PRIMARY KEY (`id_presentacion`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `presentaciones`
---
-
-LOCK TABLES `presentaciones` WRITE;
-INSERT INTO `presentaciones` VALUES (1,'PRESENTACION PRUEBA','Presentacion para pruebas de funcionalidad de Software',1);
-UNLOCK TABLES;
-
---
--- Table structure for table `presupuestos_detalle`
---
-
-DROP TABLE IF EXISTS `presupuestos_detalle`;
-CREATE TABLE `presupuestos_detalle` (
-  `id_presupuesto_detalle` int NOT NULL AUTO_INCREMENT,
-  `id_presupuesto_encabezado` int NOT NULL,
-  `id_cotizacion_encabezado` int NOT NULL,
-  `id_proveedor` int NOT NULL,
-  `fecha_presupuesto` date DEFAULT NULL,
-  PRIMARY KEY (`id_presupuesto_detalle`,`id_presupuesto_encabezado`,`id_cotizacion_encabezado`,`id_proveedor`),
-  KEY `fk_presupuestos_detalle_cotizaciones_encabezado1` (`id_cotizacion_encabezado`,`id_proveedor`),
-  KEY `fk_presupuestos_detalle_presupuestos_encabezado1` (`id_presupuesto_encabezado`),
-  CONSTRAINT `fk_presupuestos_detalle_cotizaciones_encabezado1` FOREIGN KEY (`id_cotizacion_encabezado`, `id_proveedor`) REFERENCES `cotizaciones_encabezado` (`id_cotizacion_encabezado`, `id_proveedor`),
-  CONSTRAINT `fk_presupuestos_detalle_presupuestos_encabezado1` FOREIGN KEY (`id_presupuesto_encabezado`) REFERENCES `presupuestos_encabezado` (`id_presupuesto_encabezado`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `presupuestos_detalle`
---
-
-LOCK TABLES `presupuestos_detalle` WRITE;
-UNLOCK TABLES;
-
---
--- Table structure for table `presupuestos_encabezado`
---
-
-DROP TABLE IF EXISTS `presupuestos_encabezado`;
-CREATE TABLE `presupuestos_encabezado` (
-  `id_presupuesto_encabezado` int NOT NULL AUTO_INCREMENT,
-  `nombre_presupuesto` varchar(45) DEFAULT NULL,
-  `descripcion_presupuesto` text,
-  `ESTADO` tinyint DEFAULT '1',
-  PRIMARY KEY (`id_presupuesto_encabezado`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `presupuestos_encabezado`
---
-
-LOCK TABLES `presupuestos_encabezado` WRITE;
-UNLOCK TABLES;
-
---
--- Table structure for table `productos`
---
-
-DROP TABLE IF EXISTS `productos`;
-CREATE TABLE `productos` (
-  `id_producto` int NOT NULL AUTO_INCREMENT,
-  `id_tipo_producto` int NOT NULL,
-  `id_impuesto` int NOT NULL,
-  `id_categoria` int NOT NULL,
-  `nombre_producto` varchar(45) DEFAULT NULL,
-  `descripcion_producto` text,
-  `costo_producto` double DEFAULT NULL,
-  `precio_producto` double DEFAULT NULL,
-  `cantidad_maxima_producto` int DEFAULT NULL,
-  `cantidad_minima_producto` int DEFAULT NULL,
-  `stock_producto` int DEFAULT NULL,
-  `ESTADO` tinyint DEFAULT '1',
-  PRIMARY KEY (`id_producto`,`id_tipo_producto`),
-  KEY `fk_productos_tipos_productos1` (`id_tipo_producto`),
-  KEY `fk_productos_impuestos1` (`id_impuesto`),
-  KEY `fk_productos_categorias1` (`id_categoria`),
-  CONSTRAINT `fk_productos_categorias1` FOREIGN KEY (`id_categoria`) REFERENCES `categorias` (`id_categoria`),
-  CONSTRAINT `fk_productos_impuestos1` FOREIGN KEY (`id_impuesto`) REFERENCES `impuestos` (`id_impuesto`),
-  CONSTRAINT `fk_productos_tipos_productos1` FOREIGN KEY (`id_tipo_producto`) REFERENCES `tipos_productos` (`id_tipo_producto`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `productos`
---
-
-LOCK TABLES `productos` WRITE;
-INSERT INTO `productos` VALUES (1,1,1,1,'Producto prueba','Producto para pruebas de funcionalidad de Software',0.01,1,100,1,50,1),(2,1,1,1,'Producto prueba 2','Producto para pruebas de funcionalidad de Software',0.2,2,100,2,50,1);
-UNLOCK TABLES;
-
---
--- Table structure for table `productos_lineas`
---
-
-DROP TABLE IF EXISTS `productos_lineas`;
-CREATE TABLE `productos_lineas` (
-  `id_producto` int NOT NULL,
-  `id_linea` int NOT NULL,
-  PRIMARY KEY (`id_producto`,`id_linea`),
-  KEY `fk_productos_has_lineas_lineas1` (`id_linea`),
-  CONSTRAINT `fk_productos_has_lineas_lineas1` FOREIGN KEY (`id_linea`) REFERENCES `lineas` (`id_linea`),
-  CONSTRAINT `fk_productos_has_lineas_productos1` FOREIGN KEY (`id_producto`) REFERENCES `productos` (`id_producto`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `productos_lineas`
---
-
-LOCK TABLES `productos_lineas` WRITE;
-UNLOCK TABLES;
-
---
--- Table structure for table `productos_marcas`
---
-
-DROP TABLE IF EXISTS `productos_marcas`;
-CREATE TABLE `productos_marcas` (
-  `id_producto` int NOT NULL,
-  `id_marca` int NOT NULL,
-  PRIMARY KEY (`id_producto`,`id_marca`),
-  KEY `fk_productos_has_marcas_marcas1` (`id_marca`),
-  CONSTRAINT `fk_productos_has_marcas_marcas1` FOREIGN KEY (`id_marca`) REFERENCES `marcas` (`id_marca`),
-  CONSTRAINT `fk_productos_has_marcas_productos1` FOREIGN KEY (`id_producto`) REFERENCES `productos` (`id_producto`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `productos_marcas`
---
-
-LOCK TABLES `productos_marcas` WRITE;
-/*!40000 ALTER TABLE `productos_marcas` DISABLE KEYS */;
-/*!40000 ALTER TABLE `productos_marcas` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `productos_presentaciones`
---
-
-DROP TABLE IF EXISTS `productos_presentaciones`;
-CREATE TABLE `productos_presentaciones` (
-  `id_producto` int NOT NULL,
-  `id_presentacion` int NOT NULL,
-  PRIMARY KEY (`id_producto`,`id_presentacion`),
-  KEY `fk_productos_has_presentaciones_presentaciones1` (`id_presentacion`),
-  CONSTRAINT `fk_productos_has_presentaciones_presentaciones1` FOREIGN KEY (`id_presentacion`) REFERENCES `presentaciones` (`id_presentacion`),
-  CONSTRAINT `fk_productos_has_presentaciones_productos1` FOREIGN KEY (`id_producto`) REFERENCES `productos` (`id_producto`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `productos_presentaciones`
---
-
-LOCK TABLES `productos_presentaciones` WRITE;
-UNLOCK TABLES;
-
---
--- Table structure for table `productos_proveedores`
---
-
-DROP TABLE IF EXISTS `productos_proveedores`;
-CREATE TABLE `productos_proveedores` (
-  `id_producto` int NOT NULL,
-  `id_proveedor` int NOT NULL,
-  PRIMARY KEY (`id_producto`,`id_proveedor`),
-  KEY `fk_productos_has_proveedores_proveedores1` (`id_proveedor`),
-  CONSTRAINT `fk_productos_has_proveedores_productos` FOREIGN KEY (`id_producto`) REFERENCES `productos` (`id_producto`),
-  CONSTRAINT `fk_productos_has_proveedores_proveedores1` FOREIGN KEY (`id_proveedor`) REFERENCES `proveedores` (`id_proveedor`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `productos_proveedores`
---
-
-LOCK TABLES `productos_proveedores` WRITE;
-UNLOCK TABLES;
-
---
--- Table structure for table `proveedores`
---
-
-DROP TABLE IF EXISTS `proveedores`;
-CREATE TABLE `proveedores` (
-  `id_proveedor` int NOT NULL AUTO_INCREMENT,
-  `id_contacto` int NOT NULL,
-  `nombre_proveedor` varchar(45) DEFAULT NULL,
-  `descripcion_proveedor` text,
-  `direccion_proveedor` varchar(45) DEFAULT NULL,
-  `pagina_proveedor` varchar(45) DEFAULT NULL,
-  `ESTADO` tinyint DEFAULT '1',
+  INDEX `fk_servicios_contactos1` (`id_contacto` ASC) VISIBLE,
+  CONSTRAINT `fk_servicios_contactos1`
+    FOREIGN KEY (`id_contacto`)
+    REFERENCES `erp`.`contactos` (`id_contacto`))
+ENGINE = InnoDB
+AUTO_INCREMENT = 2
+DEFAULT CHARACTER SET = utf8;
+
+
+-- -----------------------------------------------------
+-- Table `erp`.`servicios`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `erp`.`servicios` (
+  `id_servicio` INT NOT NULL AUTO_INCREMENT,
+  `nombre_servicio` VARCHAR(45) NULL DEFAULT NULL,
+  `descripcion_servicio` TEXT NULL DEFAULT NULL,
+  `ESTADO` TINYINT NULL DEFAULT '1',
+  PRIMARY KEY (`id_servicio`))
+ENGINE = InnoDB
+AUTO_INCREMENT = 2
+DEFAULT CHARACTER SET = utf8;
+
+
+-- -----------------------------------------------------
+-- Table `erp`.`acreedores_servicios`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `erp`.`acreedores_servicios` (
+  `id_acreedor` INT NOT NULL,
+  `id_servicio` INT NOT NULL,
+  PRIMARY KEY (`id_acreedor`, `id_servicio`),
+  INDEX `fk_acreedores_has_servicios_servicios1` (`id_servicio` ASC) VISIBLE,
+  CONSTRAINT `fk_acreedores_has_servicios_acreedores1`
+    FOREIGN KEY (`id_acreedor`)
+    REFERENCES `erp`.`acreedores` (`id_acreedor`),
+  CONSTRAINT `fk_acreedores_has_servicios_servicios1`
+    FOREIGN KEY (`id_servicio`)
+    REFERENCES `erp`.`servicios` (`id_servicio`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8;
+
+
+-- -----------------------------------------------------
+-- Table `erp`.`ayuda`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `erp`.`ayuda` (
+  `Id_ayuda` INT NOT NULL,
+  `Ruta` TEXT CHARACTER SET 'utf8' COLLATE 'utf8_unicode_ci' NOT NULL,
+  `indice` TEXT CHARACTER SET 'utf8' COLLATE 'utf8_unicode_ci' NOT NULL)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8
+COLLATE = utf8_unicode_ci;
+
+
+-- -----------------------------------------------------
+-- Table `erp`.`bodegas`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `erp`.`bodegas` (
+  `id_bodega` INT NOT NULL AUTO_INCREMENT,
+  `nombre_bodega` VARCHAR(45) NULL DEFAULT NULL,
+  `descripcion_bodega` TEXT NULL DEFAULT NULL,
+  `ubicacion_bodega` VARCHAR(45) NULL DEFAULT NULL,
+  `stock_maximo` INT NULL DEFAULT NULL,
+  `ESTADO` TINYINT NULL DEFAULT '1',
+  PRIMARY KEY (`id_bodega`))
+ENGINE = InnoDB
+AUTO_INCREMENT = 2
+DEFAULT CHARACTER SET = utf8;
+
+
+-- -----------------------------------------------------
+-- Table `erp`.`categorias`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `erp`.`categorias` (
+  `id_categoria` INT NOT NULL AUTO_INCREMENT,
+  `nombre_categoria` VARCHAR(45) NULL DEFAULT NULL,
+  `descripcion_categoria` TEXT NULL DEFAULT NULL,
+  `ESTADO` TINYINT NULL DEFAULT '1',
+  PRIMARY KEY (`id_categoria`))
+ENGINE = InnoDB
+AUTO_INCREMENT = 2
+DEFAULT CHARACTER SET = utf8;
+
+
+-- -----------------------------------------------------
+-- Table `erp`.`proveedores`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `erp`.`proveedores` (
+  `id_proveedor` INT NOT NULL AUTO_INCREMENT,
+  `id_contacto` INT NOT NULL,
+  `nombre_proveedor` VARCHAR(45) NULL DEFAULT NULL,
+  `descripcion_proveedor` TEXT NULL DEFAULT NULL,
+  `direccion_proveedor` VARCHAR(45) NULL DEFAULT NULL,
+  `pagina_proveedor` VARCHAR(45) NULL DEFAULT NULL,
+  `ESTADO` TINYINT NULL DEFAULT '1',
   PRIMARY KEY (`id_proveedor`),
-  KEY `fk_proveedores_contactos1` (`id_contacto`),
-  CONSTRAINT `fk_proveedores_contactos1` FOREIGN KEY (`id_contacto`) REFERENCES `contactos` (`id_contacto`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+  INDEX `fk_proveedores_contactos1` (`id_contacto` ASC) VISIBLE,
+  CONSTRAINT `fk_proveedores_contactos1`
+    FOREIGN KEY (`id_contacto`)
+    REFERENCES `erp`.`contactos` (`id_contacto`))
+ENGINE = InnoDB
+AUTO_INCREMENT = 2
+DEFAULT CHARACTER SET = utf8;
 
---
--- Dumping data for table `proveedores`
---
 
-LOCK TABLES `proveedores` WRITE;
-INSERT INTO `proveedores` VALUES (1,1,'PROVEEDRO PRUEBA','Proveedor para pruebas de funcionalidad de Software','direccion','proveedor.com',1);
-UNLOCK TABLES;
+-- -----------------------------------------------------
+-- Table `erp`.`cotizaciones_encabezado`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `erp`.`cotizaciones_encabezado` (
+  `id_cotizacion_encabezado` INT NOT NULL AUTO_INCREMENT,
+  `id_proveedor` INT NOT NULL,
+  `nombre_cotizacion` VARCHAR(45) NULL DEFAULT NULL,
+  `descripcion_cotizacion` TEXT NULL DEFAULT NULL,
+  `fecha_cotizacion` DATE NULL DEFAULT NULL,
+  `fecha_caducidad` DATE NULL DEFAULT NULL,
+  `ESTADO` TINYINT NULL DEFAULT '1',
+  PRIMARY KEY (`id_cotizacion_encabezado`, `id_proveedor`),
+  INDEX `fk_cotizaciones_encabezado_proveedores1` (`id_proveedor` ASC) VISIBLE,
+  CONSTRAINT `fk_cotizaciones_encabezado_proveedores1`
+    FOREIGN KEY (`id_proveedor`)
+    REFERENCES `erp`.`proveedores` (`id_proveedor`))
+ENGINE = InnoDB
+AUTO_INCREMENT = 3
+DEFAULT CHARACTER SET = utf8;
 
---
--- Table structure for table `servicios`
---
 
-DROP TABLE IF EXISTS `servicios`;
-CREATE TABLE `servicios` (
-  `id_servicio` int NOT NULL AUTO_INCREMENT,
-  `nombre_servicio` varchar(45) DEFAULT NULL,
-  `descripcion_servicio` text,
-  `ESTADO` tinyint DEFAULT '1',
-  PRIMARY KEY (`id_servicio`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+-- -----------------------------------------------------
+-- Table `erp`.`impuestos`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `erp`.`impuestos` (
+  `id_impuesto` INT NOT NULL AUTO_INCREMENT,
+  `nombre_impuesto` VARCHAR(45) NULL DEFAULT NULL,
+  `descripcion_impuesto` TEXT NULL DEFAULT NULL,
+  `tasa_impuesto` DOUBLE NULL DEFAULT NULL,
+  `ESTADO` TINYINT NULL DEFAULT '1',
+  PRIMARY KEY (`id_impuesto`))
+ENGINE = InnoDB
+AUTO_INCREMENT = 2
+DEFAULT CHARACTER SET = utf8;
 
---
--- Dumping data for table `servicios`
---
 
-LOCK TABLES `servicios` WRITE;
-INSERT INTO `servicios` VALUES (1,'SERVICIO PRUEBA','Servicio para pruebas de funcionalidad de Software',1);
-UNLOCK TABLES;
+-- -----------------------------------------------------
+-- Table `erp`.`tipos_productos`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `erp`.`tipos_productos` (
+  `id_tipo_producto` INT NOT NULL AUTO_INCREMENT,
+  `nombre_tipo_producto` VARCHAR(45) NULL DEFAULT NULL,
+  `descripcion_tipo_producto` TEXT NULL DEFAULT NULL,
+  `ESTADO` TINYINT NULL DEFAULT NULL,
+  PRIMARY KEY (`id_tipo_producto`))
+ENGINE = InnoDB
+AUTO_INCREMENT = 2
+DEFAULT CHARACTER SET = utf8;
 
---
--- Table structure for table `tipo_cuentas`
---
 
-DROP TABLE IF EXISTS `tipo_cuentas`;
-CREATE TABLE `tipo_cuentas` (
-  `id_tipo_cuenta` int NOT NULL AUTO_INCREMENT,
-  `nombre_tipo_cuenta` varchar(25) DEFAULT NULL,
-  `descripcion_tipo_cuenta` varchar(45) DEFAULT NULL,
-  `estado` tinyint DEFAULT '1',
-  PRIMARY KEY (`id_tipo_cuenta`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+-- -----------------------------------------------------
+-- Table `erp`.`productos`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `erp`.`productos` (
+  `id_producto` INT NOT NULL AUTO_INCREMENT,
+  `id_tipo_producto` INT NOT NULL,
+  `id_impuesto` INT NOT NULL,
+  `id_categoria` INT NOT NULL,
+  `nombre_producto` VARCHAR(45) NULL DEFAULT NULL,
+  `descripcion_producto` TEXT NULL DEFAULT NULL,
+  `costo_producto` DOUBLE NULL DEFAULT NULL,
+  `precio_producto` DOUBLE NULL DEFAULT NULL,
+  `cantidad_maxima_producto` INT NULL DEFAULT NULL,
+  `cantidad_minima_producto` INT NULL DEFAULT NULL,
+  `stock_producto` INT NULL DEFAULT NULL,
+  `ESTADO` TINYINT NULL DEFAULT '1',
+  PRIMARY KEY (`id_producto`, `id_tipo_producto`),
+  INDEX `fk_productos_tipos_productos1` (`id_tipo_producto` ASC) VISIBLE,
+  INDEX `fk_productos_impuestos1` (`id_impuesto` ASC) VISIBLE,
+  INDEX `fk_productos_categorias1` (`id_categoria` ASC) VISIBLE,
+  CONSTRAINT `fk_productos_categorias1`
+    FOREIGN KEY (`id_categoria`)
+    REFERENCES `erp`.`categorias` (`id_categoria`),
+  CONSTRAINT `fk_productos_impuestos1`
+    FOREIGN KEY (`id_impuesto`)
+    REFERENCES `erp`.`impuestos` (`id_impuesto`),
+  CONSTRAINT `fk_productos_tipos_productos1`
+    FOREIGN KEY (`id_tipo_producto`)
+    REFERENCES `erp`.`tipos_productos` (`id_tipo_producto`))
+ENGINE = InnoDB
+AUTO_INCREMENT = 3
+DEFAULT CHARACTER SET = utf8;
 
---
--- Dumping data for table `tipo_cuentas`
---
 
-LOCK TABLES `tipo_cuentas` WRITE;
-INSERT INTO `tipo_cuentas` VALUES (1,'TipoCuenta','descripcion',1);
-UNLOCK TABLES;
+-- -----------------------------------------------------
+-- Table `erp`.`cotizaciones_detalle`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `erp`.`cotizaciones_detalle` (
+  `id_cotizacion_detalle` INT NOT NULL AUTO_INCREMENT,
+  `id_cotizacion_encabezado` INT NOT NULL,
+  `id_proveedor` INT NOT NULL,
+  `id_producto` INT NOT NULL,
+  `cantidad_cotizacion` INT NULL DEFAULT NULL,
+  `precio_unitario_cotizacion` DOUBLE NULL DEFAULT NULL,
+  PRIMARY KEY (`id_cotizacion_detalle`, `id_cotizacion_encabezado`, `id_proveedor`, `id_producto`),
+  INDEX `fk_cotizaciones_detalle_cotizaciones_encabezado1` (`id_cotizacion_encabezado` ASC, `id_proveedor` ASC) VISIBLE,
+  INDEX `fk_cotizaciones_detalle_productos1` (`id_producto` ASC) VISIBLE,
+  CONSTRAINT `fk_cotizaciones_detalle_cotizaciones_encabezado1`
+    FOREIGN KEY (`id_cotizacion_encabezado` , `id_proveedor`)
+    REFERENCES `erp`.`cotizaciones_encabezado` (`id_cotizacion_encabezado` , `id_proveedor`),
+  CONSTRAINT `fk_cotizaciones_detalle_productos1`
+    FOREIGN KEY (`id_producto`)
+    REFERENCES `erp`.`productos` (`id_producto`))
+ENGINE = InnoDB
+AUTO_INCREMENT = 3
+DEFAULT CHARACTER SET = utf8;
 
---
--- Table structure for table `tipos_movimientos`
---
 
-DROP TABLE IF EXISTS `tipos_movimientos`;
-CREATE TABLE `tipos_movimientos` (
-  `id_tipo_movimiento` int NOT NULL AUTO_INCREMENT,
-  `id_cuenta` int NOT NULL,
-  `nombre_tipo_movimiento` varchar(45) DEFAULT NULL,
-  `descripcion_tipo_movimiento` text,
-  `signo` varchar(1) DEFAULT NULL,
-  `estado` tinyint DEFAULT '1',
-  PRIMARY KEY (`id_tipo_movimiento`,`id_cuenta`),
-  KEY `fk_tipos_movimientos_cuentas` (`id_cuenta`),
-  CONSTRAINT `fk_tipos_movimientos_cuentas` FOREIGN KEY (`id_cuenta`) REFERENCES `cuentas` (`id_cuenta`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+-- -----------------------------------------------------
+-- Table `erp`.`ordenes_compras_encabezado`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `erp`.`ordenes_compras_encabezado` (
+  `id_orden_compra_encabezado` INT NOT NULL AUTO_INCREMENT,
+  `id_cotizacion_encabezado` INT NOT NULL,
+  `id_proveedor` INT NOT NULL,
+  `nombre_orden_compra` VARCHAR(45) NULL DEFAULT NULL,
+  `descripcion_orden_compra` TEXT NULL DEFAULT NULL,
+  `fecha_emision` DATE NULL DEFAULT NULL,
+  `fecha_entrega` DATE NULL DEFAULT NULL,
+  `fecha_estimada_entrega` DATE NULL DEFAULT NULL,
+  `entregado` INT NULL DEFAULT NULL,
+  `ESTADO` TINYINT NULL DEFAULT '1',
+  PRIMARY KEY (`id_orden_compra_encabezado`, `id_cotizacion_encabezado`, `id_proveedor`),
+  INDEX `fk_ordenes_compras_encabezado_cotizaciones_encabezado1` (`id_cotizacion_encabezado` ASC, `id_proveedor` ASC) VISIBLE,
+  CONSTRAINT `fk_ordenes_compras_encabezado_cotizaciones_encabezado1`
+    FOREIGN KEY (`id_cotizacion_encabezado` , `id_proveedor`)
+    REFERENCES `erp`.`cotizaciones_encabezado` (`id_cotizacion_encabezado` , `id_proveedor`))
+ENGINE = InnoDB
+AUTO_INCREMENT = 2
+DEFAULT CHARACTER SET = utf8;
 
---
--- Dumping data for table `tipos_movimientos`
---
 
-LOCK TABLES `tipos_movimientos` WRITE;
+-- -----------------------------------------------------
+-- Table `erp`.`creditos_pedidos_encabezado`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `erp`.`creditos_pedidos_encabezado` (
+  `id_credito_pedido_encabezado` INT NOT NULL AUTO_INCREMENT,
+  `id_orden_compra_encabezado` INT NOT NULL,
+  `id_cotizacion_encabezado` INT NOT NULL,
+  `id_proveedor` INT NOT NULL,
+  `id_banco` INT NULL DEFAULT NULL,
+  `monto_total` DOUBLE NULL DEFAULT NULL,
+  `saldo_actual` DOUBLE NULL DEFAULT NULL,
+  `fecha_inicio` DATE NULL DEFAULT NULL,
+  `numero_cuotas` INT NULL DEFAULT NULL,
+  `limite_cuotas` INT NULL DEFAULT NULL,
+  `ESTADO` TINYINT NULL DEFAULT '1',
+  PRIMARY KEY (`id_credito_pedido_encabezado`, `id_orden_compra_encabezado`, `id_cotizacion_encabezado`, `id_proveedor`),
+  INDEX `fk_creditos_pedidos_encabezado_ordenes_compras_encabezado1` (`id_orden_compra_encabezado` ASC, `id_cotizacion_encabezado` ASC, `id_proveedor` ASC) VISIBLE,
+  INDEX `fk_creditos_pedidos_encabezado_bancos` (`id_banco` ASC) VISIBLE,
+  CONSTRAINT `fk_creditos_pedidos_encabezado_bancos`
+    FOREIGN KEY (`id_banco`)
+    REFERENCES `erp`.`bancos` (`PK_idBanco`),
+  CONSTRAINT `fk_creditos_pedidos_encabezado_ordenes_compras_encabezado1`
+    FOREIGN KEY (`id_orden_compra_encabezado` , `id_cotizacion_encabezado` , `id_proveedor`)
+    REFERENCES `erp`.`ordenes_compras_encabezado` (`id_orden_compra_encabezado` , `id_cotizacion_encabezado` , `id_proveedor`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8;
+
+
+-- -----------------------------------------------------
+-- Table `erp`.`tipo_cuentas`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `erp`.`tipo_cuentas` (
+  `id_tipo_cuenta` INT NOT NULL AUTO_INCREMENT,
+  `nombre_tipo_cuenta` VARCHAR(25) NULL DEFAULT NULL,
+  `descripcion_tipo_cuenta` VARCHAR(45) NULL DEFAULT NULL,
+  `estado` TINYINT NULL DEFAULT '1',
+  PRIMARY KEY (`id_tipo_cuenta`))
+ENGINE = InnoDB
+AUTO_INCREMENT = 2
+DEFAULT CHARACTER SET = utf8;
+
+
+-- -----------------------------------------------------
+-- Table `erp`.`cuentas`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `erp`.`cuentas` (
+  `id_cuenta` INT NOT NULL AUTO_INCREMENT,
+  `id_tipo_cuenta` INT NOT NULL,
+  `nombre` VARCHAR(25) NULL DEFAULT NULL,
+  `descripcion` VARCHAR(45) NULL DEFAULT NULL,
+  `estado` TINYINT NULL DEFAULT '1',
+  PRIMARY KEY (`id_cuenta`, `id_tipo_cuenta`),
+  INDEX `fk_tbl_cuentas_contables_tbl_tipoCuentaContable1_idx` (`id_tipo_cuenta` ASC) VISIBLE,
+  CONSTRAINT `fk_tbl_cuentas_contables_tbl_tipoCuentaContable1`
+    FOREIGN KEY (`id_tipo_cuenta`)
+    REFERENCES `erp`.`tipo_cuentas` (`id_tipo_cuenta`)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE)
+ENGINE = InnoDB
+AUTO_INCREMENT = 3
+DEFAULT CHARACTER SET = utf8;
+
+
+-- -----------------------------------------------------
+-- Table `erp`.`creditos_pedidos_detalle`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `erp`.`creditos_pedidos_detalle` (
+  `id_credito_pedido_detalle` INT NOT NULL AUTO_INCREMENT,
+  `id_credito_pedido_encabezado` INT NOT NULL,
+  `id_orden_compra_encabezado` INT NOT NULL,
+  `id_cotizacion_encabezado` INT NOT NULL,
+  `id_proveedor` INT NOT NULL,
+  `fehca_inicio` DATE NULL DEFAULT NULL,
+  `fecha_limite` DATE NULL DEFAULT NULL,
+  `valor` DOUBLE NULL DEFAULT NULL,
+  `tipo_movimiento` INT NULL DEFAULT NULL,
+  PRIMARY KEY (`id_credito_pedido_detalle`, `id_credito_pedido_encabezado`, `id_orden_compra_encabezado`, `id_cotizacion_encabezado`, `id_proveedor`),
+  INDEX `fk_creditos_pedidos_detalle_creditos_pedidos_encabezado1` (`id_credito_pedido_encabezado` ASC, `id_orden_compra_encabezado` ASC, `id_cotizacion_encabezado` ASC, `id_proveedor` ASC) VISIBLE,
+  INDEX `fk_creditos_pedidos_detalle_cuentas1` (`tipo_movimiento` ASC) VISIBLE,
+  CONSTRAINT `fk_creditos_pedidos_detalle_creditos_pedidos_encabezado1`
+    FOREIGN KEY (`id_credito_pedido_encabezado` , `id_orden_compra_encabezado` , `id_cotizacion_encabezado` , `id_proveedor`)
+    REFERENCES `erp`.`creditos_pedidos_encabezado` (`id_credito_pedido_encabezado` , `id_orden_compra_encabezado` , `id_cotizacion_encabezado` , `id_proveedor`),
+  CONSTRAINT `fk_creditos_pedidos_detalle_cuentas1`
+    FOREIGN KEY (`tipo_movimiento`)
+    REFERENCES `erp`.`cuentas` (`id_cuenta`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8;
+
+
+-- -----------------------------------------------------
+-- Table `erp`.`devoluciones`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `erp`.`devoluciones` (
+  `id_devolucion` INT NOT NULL AUTO_INCREMENT,
+  `id_orden_compra_encabezado` INT NOT NULL,
+  `id_cotizacion_encabezado` INT NOT NULL,
+  `id_proveedor` INT NOT NULL,
+  `fecha_devolucion` DATE NULL DEFAULT NULL,
+  `razon_devolucion` TEXT NULL DEFAULT NULL,
+  `ESTADO` TINYINT NULL DEFAULT '1',
+  PRIMARY KEY (`id_devolucion`, `id_orden_compra_encabezado`, `id_cotizacion_encabezado`, `id_proveedor`),
+  INDEX `fk_devoluciones_ordenes_compras_encabezado1` (`id_orden_compra_encabezado` ASC, `id_cotizacion_encabezado` ASC, `id_proveedor` ASC) VISIBLE,
+  CONSTRAINT `fk_devoluciones_ordenes_compras_encabezado1`
+    FOREIGN KEY (`id_orden_compra_encabezado` , `id_cotizacion_encabezado` , `id_proveedor`)
+    REFERENCES `erp`.`ordenes_compras_encabezado` (`id_orden_compra_encabezado` , `id_cotizacion_encabezado` , `id_proveedor`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8;
+
+
+-- -----------------------------------------------------
+-- Table `erp`.`documentos`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `erp`.`documentos` (
+  `id_documento` INT NOT NULL AUTO_INCREMENT,
+  `codigo_documento` INT NULL DEFAULT NULL,
+  `nombre_documento` VARCHAR(45) NULL DEFAULT NULL,
+  `tipo_documento` VARCHAR(45) NULL DEFAULT NULL,
+  `estado` TINYINT NULL DEFAULT '1',
+  PRIMARY KEY (`id_documento`))
+ENGINE = InnoDB
+AUTO_INCREMENT = 3
+DEFAULT CHARACTER SET = utf8;
+
+
+-- -----------------------------------------------------
+-- Table `erp`.`inventarios`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `erp`.`inventarios` (
+  `nombre_inventario` VARCHAR(45) NULL DEFAULT NULL,
+  `id_producto` INT NOT NULL,
+  `id_bodega` INT NOT NULL,
+  `descripcion_inventario` TEXT NULL DEFAULT NULL,
+  `cantidad_maxima` INT NULL DEFAULT NULL,
+  `cantidad_minima` INT NULL DEFAULT NULL,
+  `numero_estanteria` INT NULL DEFAULT NULL,
+  `existencia_inventario` INT NULL DEFAULT NULL,
+  `ESTADO` TINYINT NULL DEFAULT '1',
+  PRIMARY KEY (`id_producto`, `id_bodega`),
+  INDEX `fk_inventarios_bodegas1` (`id_bodega` ASC) VISIBLE,
+  CONSTRAINT `fk_inventarios_bodegas1`
+    FOREIGN KEY (`id_bodega`)
+    REFERENCES `erp`.`bodegas` (`id_bodega`),
+  CONSTRAINT `fk_inventarios_productos1`
+    FOREIGN KEY (`id_producto`)
+    REFERENCES `erp`.`productos` (`id_producto`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8;
+
+
+-- -----------------------------------------------------
+-- Table `erp`.`lineas`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `erp`.`lineas` (
+  `id_linea` INT NOT NULL AUTO_INCREMENT,
+  `nombre_linea` VARCHAR(45) NULL DEFAULT NULL,
+  `descripcion_linea` TEXT NULL DEFAULT NULL,
+  `ESTADO` TINYINT NULL DEFAULT '1',
+  PRIMARY KEY (`id_linea`))
+ENGINE = InnoDB
+AUTO_INCREMENT = 2
+DEFAULT CHARACTER SET = utf8;
+
+
+-- -----------------------------------------------------
+-- Table `erp`.`marcas`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `erp`.`marcas` (
+  `id_marca` INT NOT NULL AUTO_INCREMENT,
+  `nombre_marca` VARCHAR(45) NULL DEFAULT NULL,
+  `descripcion_marca` TEXT NULL DEFAULT NULL,
+  `ESTADO` TINYINT NULL DEFAULT '1',
+  PRIMARY KEY (`id_marca`))
+ENGINE = InnoDB
+AUTO_INCREMENT = 2
+DEFAULT CHARACTER SET = utf8;
+
+
+-- -----------------------------------------------------
+-- Table `erp`.`vehiculos`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `erp`.`vehiculos` (
+  `id_vehiculo` INT NOT NULL AUTO_INCREMENT,
+  `nombre_vehiculo` VARCHAR(45) NULL DEFAULT NULL,
+  `descripcion_vehiculo` TEXT NULL DEFAULT NULL,
+  `placa_vehiculo` VARCHAR(45) NULL DEFAULT NULL,
+  `ESTADO` TINYINT NULL DEFAULT '1',
+  PRIMARY KEY (`id_vehiculo`))
+ENGINE = InnoDB
+AUTO_INCREMENT = 2
+DEFAULT CHARACTER SET = utf8;
+
+
+-- -----------------------------------------------------
+-- Table `erp`.`ordenes_transportes`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `erp`.`ordenes_transportes` (
+  `id_orden_transporte` INT NOT NULL AUTO_INCREMENT,
+  `id_vehiculo` INT NOT NULL,
+  `bodega_origen` INT NOT NULL,
+  `bodega_destino` INT NOT NULL,
+  `documentos_id_documento` INT NOT NULL,
+  `fecha_salida` DATE NULL DEFAULT NULL,
+  `fecha_llegada` DATE NULL DEFAULT NULL,
+  `ESTADO` TINYINT NULL DEFAULT '1',
+  PRIMARY KEY (`id_orden_transporte`),
+  INDEX `fk_ordenes_transportes_encabezado_vehiculos1` (`id_vehiculo` ASC) VISIBLE,
+  INDEX `fk_ordenes_transportes_encabezado_bodegas1` (`bodega_origen` ASC) VISIBLE,
+  INDEX `fk_ordenes_transportes_encabezado_bodegas2` (`bodega_destino` ASC) VISIBLE,
+  INDEX `fk_ordenes_transportes_documentos1` (`documentos_id_documento` ASC) VISIBLE,
+  CONSTRAINT `fk_ordenes_transportes_documentos1`
+    FOREIGN KEY (`documentos_id_documento`)
+    REFERENCES `erp`.`documentos` (`id_documento`),
+  CONSTRAINT `fk_ordenes_transportes_encabezado_bodegas1`
+    FOREIGN KEY (`bodega_origen`)
+    REFERENCES `erp`.`bodegas` (`id_bodega`),
+  CONSTRAINT `fk_ordenes_transportes_encabezado_bodegas2`
+    FOREIGN KEY (`bodega_destino`)
+    REFERENCES `erp`.`bodegas` (`id_bodega`),
+  CONSTRAINT `fk_ordenes_transportes_encabezado_vehiculos1`
+    FOREIGN KEY (`id_vehiculo`)
+    REFERENCES `erp`.`vehiculos` (`id_vehiculo`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8;
+
+
+-- -----------------------------------------------------
+-- Table `erp`.`tipos_movimientos`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `erp`.`tipos_movimientos` (
+  `id_tipo_movimiento` INT NOT NULL AUTO_INCREMENT,
+  `id_cuenta` INT NOT NULL,
+  `nombre_tipo_movimiento` VARCHAR(45) NULL DEFAULT NULL,
+  `descripcion_tipo_movimiento` TEXT NULL DEFAULT NULL,
+  `signo` VARCHAR(1) NULL DEFAULT NULL,
+  `estado` TINYINT NULL DEFAULT '1',
+  PRIMARY KEY (`id_tipo_movimiento`, `id_cuenta`),
+  INDEX `fk_tipos_movimientos_cuentas` (`id_cuenta` ASC) VISIBLE,
+  CONSTRAINT `fk_tipos_movimientos_cuentas`
+    FOREIGN KEY (`id_cuenta`)
+    REFERENCES `erp`.`cuentas` (`id_cuenta`))
+ENGINE = InnoDB
+AUTO_INCREMENT = 3
+DEFAULT CHARACTER SET = utf8;
+
+
+-- -----------------------------------------------------
+-- Table `erp`.`movimientos_inventario_encabezado`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `erp`.`movimientos_inventario_encabezado` (
+  `id_movimiento_inventario_encabezado` INT NOT NULL AUTO_INCREMENT,
+  `id_tipo_movimiento` INT NOT NULL,
+  `nombre_movimiento` VARCHAR(45) NULL DEFAULT NULL,
+  `descripcion_movimiento` TEXT NULL DEFAULT NULL,
+  `fecha_movimiento` DATE NULL DEFAULT NULL,
+  `bodaga_salida` INT NULL DEFAULT NULL,
+  `bodega_entrada` INT NULL DEFAULT NULL,
+  `id_orden_transporte_encabezado` INT NULL DEFAULT NULL,
+  `ESTADO` TINYINT NULL DEFAULT '1',
+  PRIMARY KEY (`id_movimiento_inventario_encabezado`),
+  INDEX `fk_movimientos_inventario_encabezado_bodegas1` (`bodaga_salida` ASC) VISIBLE,
+  INDEX `fk_movimientos_inventario_encabezado_bodegas2` (`bodega_entrada` ASC) VISIBLE,
+  INDEX `fk_movimientos_inventario_encabezado_ordenes_transportes_enca1` (`id_orden_transporte_encabezado` ASC) VISIBLE,
+  INDEX `fk_creditos_pedidos_detalle_cuentas` (`id_tipo_movimiento` ASC) VISIBLE,
+  CONSTRAINT `fk_creditos_pedidos_detalle_cuentas`
+    FOREIGN KEY (`id_tipo_movimiento`)
+    REFERENCES `erp`.`cuentas` (`id_cuenta`),
+  CONSTRAINT `fk_movimientos_inventario_encabezado_bodegas1`
+    FOREIGN KEY (`bodaga_salida`)
+    REFERENCES `erp`.`bodegas` (`id_bodega`),
+  CONSTRAINT `fk_movimientos_inventario_encabezado_bodegas2`
+    FOREIGN KEY (`bodega_entrada`)
+    REFERENCES `erp`.`bodegas` (`id_bodega`),
+  CONSTRAINT `fk_movimientos_inventario_encabezado_ordenes_transportes_enca1`
+    FOREIGN KEY (`id_orden_transporte_encabezado`)
+    REFERENCES `erp`.`ordenes_transportes` (`id_orden_transporte`),
+  CONSTRAINT `fk_movimientos_inventario_encabezado_tipos_movimientos1`
+    FOREIGN KEY (`id_tipo_movimiento`)
+    REFERENCES `erp`.`tipos_movimientos` (`id_tipo_movimiento`))
+ENGINE = InnoDB
+AUTO_INCREMENT = 3
+DEFAULT CHARACTER SET = utf8;
+
+
+-- -----------------------------------------------------
+-- Table `erp`.`movimientos_inventario_detalle`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `erp`.`movimientos_inventario_detalle` (
+  `id_movimiento_inventario_detalle` INT NOT NULL AUTO_INCREMENT,
+  `id_movimiento_inventario_encabezado` INT NOT NULL,
+  `id_producto` INT NOT NULL,
+  `cantidad_movimiento` INT NULL DEFAULT NULL,
+  `costo_producto` DOUBLE NULL DEFAULT NULL,
+  `precio_producto` DOUBLE NULL DEFAULT NULL,
+  PRIMARY KEY (`id_movimiento_inventario_detalle`, `id_movimiento_inventario_encabezado`),
+  INDEX `fk_movimientos_inventario_encabezado_productos1` (`id_producto` ASC) VISIBLE,
+  INDEX `fk_movimientos_inventario_encabezado_movimientos_inventario_e1` (`id_movimiento_inventario_encabezado` ASC) VISIBLE,
+  CONSTRAINT `fk_movimientos_inventario_encabezado_movimientos_inventario_e1`
+    FOREIGN KEY (`id_movimiento_inventario_encabezado`)
+    REFERENCES `erp`.`movimientos_inventario_encabezado` (`id_movimiento_inventario_encabezado`),
+  CONSTRAINT `fk_movimientos_inventario_encabezado_productos1`
+    FOREIGN KEY (`id_producto`)
+    REFERENCES `erp`.`productos` (`id_producto`))
+ENGINE = InnoDB
+AUTO_INCREMENT = 6
+DEFAULT CHARACTER SET = utf8;
+
+
+-- -----------------------------------------------------
+-- Table `erp`.`ordenes_compras_detalle`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `erp`.`ordenes_compras_detalle` (
+  `id_orden_compra_detalle` INT NOT NULL AUTO_INCREMENT,
+  `id_orden_compra_encabezado` INT NOT NULL,
+  `id_cotizacion_encabezado` INT NOT NULL,
+  `id_proveedor` INT NOT NULL,
+  `id_producto` INT NOT NULL,
+  `cantidad` INT NULL DEFAULT NULL,
+  `precio_unitario` DOUBLE NULL DEFAULT NULL,
+  PRIMARY KEY (`id_orden_compra_detalle`, `id_orden_compra_encabezado`, `id_cotizacion_encabezado`, `id_proveedor`, `id_producto`),
+  INDEX `fk_ordenes_compras_detalle_ordenes_compras_encabezado1` (`id_orden_compra_encabezado` ASC, `id_cotizacion_encabezado` ASC, `id_proveedor` ASC) VISIBLE,
+  INDEX `fk_ordenes_compras_detalle_productos1` (`id_producto` ASC) VISIBLE,
+  CONSTRAINT `fk_ordenes_compras_detalle_ordenes_compras_encabezado1`
+    FOREIGN KEY (`id_orden_compra_encabezado` , `id_cotizacion_encabezado` , `id_proveedor`)
+    REFERENCES `erp`.`ordenes_compras_encabezado` (`id_orden_compra_encabezado` , `id_cotizacion_encabezado` , `id_proveedor`),
+  CONSTRAINT `fk_ordenes_compras_detalle_productos1`
+    FOREIGN KEY (`id_producto`)
+    REFERENCES `erp`.`productos` (`id_producto`))
+ENGINE = InnoDB
+AUTO_INCREMENT = 3
+DEFAULT CHARACTER SET = utf8;
+
+
+-- -----------------------------------------------------
+-- Table `erp`.`presentaciones`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `erp`.`presentaciones` (
+  `id_presentacion` INT NOT NULL AUTO_INCREMENT,
+  `nombre_presentacion` VARCHAR(45) NULL DEFAULT NULL,
+  `descripcion_presentacion` TEXT NULL DEFAULT NULL,
+  `ESTADO` TINYINT NULL DEFAULT '1',
+  PRIMARY KEY (`id_presentacion`))
+ENGINE = InnoDB
+AUTO_INCREMENT = 2
+DEFAULT CHARACTER SET = utf8;
+
+
+-- -----------------------------------------------------
+-- Table `erp`.`presupuestos_encabezado`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `erp`.`presupuestos_encabezado` (
+  `id_presupuesto_encabezado` INT NOT NULL AUTO_INCREMENT,
+  `nombre_presupuesto` VARCHAR(45) NULL DEFAULT NULL,
+  `descripcion_presupuesto` TEXT NULL DEFAULT NULL,
+  `ESTADO` TINYINT NULL DEFAULT '1',
+  PRIMARY KEY (`id_presupuesto_encabezado`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8;
+
+
+-- -----------------------------------------------------
+-- Table `erp`.`presupuestos_detalle`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `erp`.`presupuestos_detalle` (
+  `id_presupuesto_detalle` INT NOT NULL AUTO_INCREMENT,
+  `id_presupuesto_encabezado` INT NOT NULL,
+  `id_cotizacion_encabezado` INT NOT NULL,
+  `id_proveedor` INT NOT NULL,
+  `fecha_presupuesto` DATE NULL DEFAULT NULL,
+  PRIMARY KEY (`id_presupuesto_detalle`, `id_presupuesto_encabezado`, `id_cotizacion_encabezado`, `id_proveedor`),
+  INDEX `fk_presupuestos_detalle_cotizaciones_encabezado1` (`id_cotizacion_encabezado` ASC, `id_proveedor` ASC) VISIBLE,
+  INDEX `fk_presupuestos_detalle_presupuestos_encabezado1` (`id_presupuesto_encabezado` ASC) VISIBLE,
+  CONSTRAINT `fk_presupuestos_detalle_cotizaciones_encabezado1`
+    FOREIGN KEY (`id_cotizacion_encabezado` , `id_proveedor`)
+    REFERENCES `erp`.`cotizaciones_encabezado` (`id_cotizacion_encabezado` , `id_proveedor`),
+  CONSTRAINT `fk_presupuestos_detalle_presupuestos_encabezado1`
+    FOREIGN KEY (`id_presupuesto_encabezado`)
+    REFERENCES `erp`.`presupuestos_encabezado` (`id_presupuesto_encabezado`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8;
+
+
+-- -----------------------------------------------------
+-- Table `erp`.`productos_lineas`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `erp`.`productos_lineas` (
+  `id_producto` INT NOT NULL,
+  `id_linea` INT NOT NULL,
+  PRIMARY KEY (`id_producto`, `id_linea`),
+  INDEX `fk_productos_has_lineas_lineas1` (`id_linea` ASC) VISIBLE,
+  CONSTRAINT `fk_productos_has_lineas_lineas1`
+    FOREIGN KEY (`id_linea`)
+    REFERENCES `erp`.`lineas` (`id_linea`),
+  CONSTRAINT `fk_productos_has_lineas_productos1`
+    FOREIGN KEY (`id_producto`)
+    REFERENCES `erp`.`productos` (`id_producto`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8;
+
+
+-- -----------------------------------------------------
+-- Table `erp`.`productos_marcas`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `erp`.`productos_marcas` (
+  `id_producto` INT NOT NULL,
+  `id_marca` INT NOT NULL,
+  PRIMARY KEY (`id_producto`, `id_marca`),
+  INDEX `fk_productos_has_marcas_marcas1` (`id_marca` ASC) VISIBLE,
+  CONSTRAINT `fk_productos_has_marcas_marcas1`
+    FOREIGN KEY (`id_marca`)
+    REFERENCES `erp`.`marcas` (`id_marca`),
+  CONSTRAINT `fk_productos_has_marcas_productos1`
+    FOREIGN KEY (`id_producto`)
+    REFERENCES `erp`.`productos` (`id_producto`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8;
+
+
+-- -----------------------------------------------------
+-- Table `erp`.`productos_presentaciones`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `erp`.`productos_presentaciones` (
+  `id_producto` INT NOT NULL,
+  `id_presentacion` INT NOT NULL,
+  PRIMARY KEY (`id_producto`, `id_presentacion`),
+  INDEX `fk_productos_has_presentaciones_presentaciones1` (`id_presentacion` ASC) VISIBLE,
+  CONSTRAINT `fk_productos_has_presentaciones_presentaciones1`
+    FOREIGN KEY (`id_presentacion`)
+    REFERENCES `erp`.`presentaciones` (`id_presentacion`),
+  CONSTRAINT `fk_productos_has_presentaciones_productos1`
+    FOREIGN KEY (`id_producto`)
+    REFERENCES `erp`.`productos` (`id_producto`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8;
+
+
+-- -----------------------------------------------------
+-- Table `erp`.`productos_proveedores`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `erp`.`productos_proveedores` (
+  `id_producto` INT NOT NULL,
+  `id_proveedor` INT NOT NULL,
+  PRIMARY KEY (`id_producto`, `id_proveedor`),
+  INDEX `fk_productos_has_proveedores_proveedores1` (`id_proveedor` ASC) VISIBLE,
+  CONSTRAINT `fk_productos_has_proveedores_productos`
+    FOREIGN KEY (`id_producto`)
+    REFERENCES `erp`.`productos` (`id_producto`),
+  CONSTRAINT `fk_productos_has_proveedores_proveedores1`
+    FOREIGN KEY (`id_proveedor`)
+    REFERENCES `erp`.`proveedores` (`id_proveedor`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8;
+
+USE `erp` ;
+
+-- -----------------------------------------------------
+-- Placeholder table for view `erp`.`poliza_movimiento`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `erp`.`poliza_movimiento` (`Cuenta` INT, `debe` INT, `haber` INT);
+
+-- -----------------------------------------------------
+-- View `erp`.`poliza_movimiento`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `erp`.`poliza_movimiento`;
+USE `erp`;
+CREATE  OR REPLACE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `erp`.`poliza_movimiento` AS select 'Compras' AS `Cuenta`,round((select sum(`mov_det`.`precio_producto`) AS `debe` from ((`erp`.`movimientos_inventario_detalle` `mov_det` join `erp`.`movimientos_inventario_encabezado` `mov_enc` on((`mov_det`.`id_movimiento_inventario_encabezado` = `mov_enc`.`id_movimiento_inventario_encabezado`))) join `erp`.`tipos_movimientos` `tipo_mov` on((`mov_enc`.`id_tipo_movimiento` = `tipo_mov`.`id_tipo_movimiento`))) where (`tipo_mov`.`nombre_tipo_movimiento` = 'Compra')),2) AS `debe`,'0' AS `haber` union all select 'Compras' AS `Cuenta`,'0' AS `debe`,round((select sum(`mov_det`.`precio_producto`) AS `debe` from ((`erp`.`movimientos_inventario_detalle` `mov_det` join `erp`.`movimientos_inventario_encabezado` `mov_enc` on((`mov_det`.`id_movimiento_inventario_encabezado` = `mov_enc`.`id_movimiento_inventario_encabezado`))) join `erp`.`tipos_movimientos` `tipo_mov` on((`mov_enc`.`id_tipo_movimiento` = `tipo_mov`.`id_tipo_movimiento`))) where (`tipo_mov`.`nombre_tipo_movimiento` = 'Compra')),2) AS `haber` union all select 'Venta' AS `Cuenta`,'0' AS `debe`,round((select sum(`mov_det`.`precio_producto`) AS `debe` from ((`erp`.`movimientos_inventario_detalle` `mov_det` join `erp`.`movimientos_inventario_encabezado` `mov_enc` on((`mov_det`.`id_movimiento_inventario_encabezado` = `mov_enc`.`id_movimiento_inventario_encabezado`))) join `erp`.`tipos_movimientos` `tipo_mov` on((`mov_enc`.`id_tipo_movimiento` = `tipo_mov`.`id_tipo_movimiento`))) where (`tipo_mov`.`nombre_tipo_movimiento` = 'Venta')),2) AS `haber` union all select 'Caja' AS `Cuenta`,round((select sum(`mov_det`.`precio_producto`) AS `debe` from ((`erp`.`movimientos_inventario_detalle` `mov_det` join `erp`.`movimientos_inventario_encabezado` `mov_enc` on((`mov_det`.`id_movimiento_inventario_encabezado` = `mov_enc`.`id_movimiento_inventario_encabezado`))) join `erp`.`tipos_movimientos` `tipo_mov` on((`mov_enc`.`id_tipo_movimiento` = `tipo_mov`.`id_tipo_movimiento`))) where (`tipo_mov`.`nombre_tipo_movimiento` = 'Venta')),2) AS `debe`,'0' AS `haber`;
+
+-- -----------------------------------------------------
+-- INCERT
+-- -----------------------------------------------------
+
 INSERT INTO `tipos_movimientos` VALUES (1,1,'Compra','Descripcion','+',1),(2,1,'Venta','Descripcion','-',1);
-UNLOCK TABLES;
-
---
--- Table structure for table `tipos_productos`
---
-
-DROP TABLE IF EXISTS `tipos_productos`;
-CREATE TABLE `tipos_productos` (
-  `id_tipo_producto` int NOT NULL AUTO_INCREMENT,
-  `nombre_tipo_producto` varchar(45) DEFAULT NULL,
-  `descripcion_tipo_producto` text,
-  `ESTADO` tinyint DEFAULT NULL,
-  PRIMARY KEY (`id_tipo_producto`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `tipos_productos`
---
-
-LOCK TABLES `tipos_productos` WRITE;
+INSERT INTO `tipo_cuentas` VALUES (1,'TipoCuenta','descripcion',1);
+INSERT INTO `cuentas` VALUES (1,1,'cuenta','descripcion',1),(2,1,'cuenta2','descripcion',1);
+INSERT INTO `documentos` VALUES (1,0,'Documento Prueba','Orden de Compra',1),(2,0,'Documento Prueba','Orden de Compra',1);
+INSERT INTO `contactos` VALUES (1,'CONTACTO PRUEBA','Contacto para pruebas de funcionalidad de Software','12345678','direccion','email@123.com',1);
+INSERT INTO `bodegas` VALUES (1,'BODEGA PRUEBA','Bodega para pruebas de funcionalidad de Software','ubicacion',0,1);
+INSERT INTO `ayuda` VALUES (1,'Página web ayuda/ayuda.chm','menu.html'),(2,'Página web ayuda/ayuda.chm','Menúboletos.html');
+INSERT INTO `acreedores` VALUES (1,1,'ACREEDOR PRUEBA','Acreedor para pruebas de funcionalidad de Software','direccion','acreedor.com',1);
+INSERT INTO `categorias` VALUES (1,'CATEGORIA PRUEBA','Categoria para pruebas de funcionalidad de Software',1);
+INSERT INTO `lineas` VALUES (1,'LINEA PRUEBA','Linea para pruebas de funcionalidad de Software',1);
+INSERT INTO `presentaciones` VALUES (1,'PRESENTACION PRUEBA','Presentacion para pruebas de funcionalidad de Software',1);
+INSERT INTO `marcas` VALUES (1,'MARCA PRUEBA','Marca para pruebas de funcionalidad de Software',1);
 INSERT INTO `tipos_productos` VALUES (1,'TIPO PRODUCTO PRUEBA','Tipo Producto para pruebas de funcionalidad de Software',1);
-UNLOCK TABLES;
-
---
--- Table structure for table `vehiculos`
---
-
-DROP TABLE IF EXISTS `vehiculos`;
-CREATE TABLE `vehiculos` (
-  `id_vehiculo` int NOT NULL AUTO_INCREMENT,
-  `nombre_vehiculo` varchar(45) DEFAULT NULL,
-  `descripcion_vehiculo` text,
-  `placa_vehiculo` varchar(45) DEFAULT NULL,
-  `ESTADO` tinyint DEFAULT '1',
-  PRIMARY KEY (`id_vehiculo`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `vehiculos`
---
-
-LOCK TABLES `vehiculos` WRITE;
 INSERT INTO `vehiculos` VALUES (1,'TRANSPORTE PRUEBA','Transporte para pruebas de funcionalidad de Software','placa',1);
-UNLOCK TABLES;
+INSERT INTO `productos` VALUES (1,1,1,1,'Producto prueba','Producto para pruebas de funcionalidad de Software',0.01,1,100,1,50,1),(2,1,1,1,'Producto prueba 2','Producto para pruebas de funcionalidad de Software',0.2,2,100,2,50,1);
+INSERT INTO `impuestos` VALUES (1,'IMPUESTO PRUEBA','Impuesto para pruebas de funcionalidad de Software',0.5,1);
+INSERT INTO `inventarios` VALUES ('INVENTARIO PRUEBA',2,1,'Inventario para pruebas de funcionalidad de Software',800,2,2,90,1);
+INSERT INTO `proveedores` VALUES (1,1,'PROVEEDRO PRUEBA','Proveedor para pruebas de funcionalidad de Software','direccion','proveedor.com',1);
+INSERT INTO `servicios` VALUES (1,'SERVICIO PRUEBA','Servicio para pruebas de funcionalidad de Software',1);
+INSERT INTO `movimientos_inventario_encabezado` VALUES (1,1,'movimiento','descripcion','2020-06-01',NULL,NULL,NULL,1),(2,1,'movimiento','descripcion','2010-05-04',NULL,NULL,NULL,1);
+INSERT INTO `movimientos_inventario_detalle` VALUES (1,1,1,10,3.01,1),(1,2,1,10,4.5,1),(2,1,1,10,8.01,1),(2,2,1,10,0.8,1),(3,1,1,10,4.5,1),(3,2,1,10,0.05,1),(4,1,1,10,0.8,1),(5,1,1,10,0.05,1);
+INSERT INTO `ordenes_compras_encabezado` VALUES (1,1,1,'Orden Compra Prueba',' ','2020-01-01','2020-02-03','2020-01-01',0,1);
+INSERT INTO `ordenes_compras_detalle` VALUES (1,1,1,1,1,32,32.2),(2,1,1,1,2,20,21.02);
+INSERT INTO `cotizaciones_encabezado` VALUES (1,1,'cotizacion prueba','descripcion de cotizacion prueba','2020-01-01','2022-01-10',1),(2,1,'cotizacion prueba 2','descripcion de cotizacion prueba','2020-01-01','2022-01-10',1);
+INSERT INTO `cotizaciones_detalle` VALUES (1,1,1,1,20,0.25),(1,2,1,1,2000,0.23),(2,1,1,2,30,0.01);
