@@ -35,7 +35,7 @@ CREATE TABLE IF NOT EXISTS `erp`.`acreedores` (
   `pagina_acreedor` VARCHAR(45) NULL DEFAULT NULL,
   `ESTADO` TINYINT NULL DEFAULT '1',
   PRIMARY KEY (`id_acreedor`),
-  INDEX `fk_servicios_contactos1` (`id_contacto` ASC) VISIBLE,
+  INDEX `fk_servicios_contactos1` (`id_contacto` ASC) ,
   CONSTRAINT `fk_servicios_contactos1`
     FOREIGN KEY (`id_contacto`)
     REFERENCES `erp`.`contactos` (`id_contacto`))
@@ -65,7 +65,7 @@ CREATE TABLE IF NOT EXISTS `erp`.`acreedores_servicios` (
   `id_acreedor` INT NOT NULL,
   `id_servicio` INT NOT NULL,
   PRIMARY KEY (`id_acreedor`, `id_servicio`),
-  INDEX `fk_acreedores_has_servicios_servicios1` (`id_servicio` ASC) VISIBLE,
+  INDEX `fk_acreedores_has_servicios_servicios1` (`id_servicio` ASC) ,
   CONSTRAINT `fk_acreedores_has_servicios_acreedores1`
     FOREIGN KEY (`id_acreedor`)
     REFERENCES `erp`.`acreedores` (`id_acreedor`),
@@ -130,7 +130,7 @@ CREATE TABLE IF NOT EXISTS `erp`.`proveedores` (
   `pagina_proveedor` VARCHAR(45) NULL DEFAULT NULL,
   `ESTADO` TINYINT NULL DEFAULT '1',
   PRIMARY KEY (`id_proveedor`),
-  INDEX `fk_proveedores_contactos1` (`id_contacto` ASC) VISIBLE,
+  INDEX `fk_proveedores_contactos1` (`id_contacto` ASC) ,
   CONSTRAINT `fk_proveedores_contactos1`
     FOREIGN KEY (`id_contacto`)
     REFERENCES `erp`.`contactos` (`id_contacto`))
@@ -151,7 +151,7 @@ CREATE TABLE IF NOT EXISTS `erp`.`cotizaciones_encabezado` (
   `fecha_caducidad` DATE NULL DEFAULT NULL,
   `ESTADO` TINYINT NULL DEFAULT '1',
   PRIMARY KEY (`id_cotizacion_encabezado`, `id_proveedor`),
-  INDEX `fk_cotizaciones_encabezado_proveedores1` (`id_proveedor` ASC) VISIBLE,
+  INDEX `fk_cotizaciones_encabezado_proveedores1` (`id_proveedor` ASC) ,
   CONSTRAINT `fk_cotizaciones_encabezado_proveedores1`
     FOREIGN KEY (`id_proveedor`)
     REFERENCES `erp`.`proveedores` (`id_proveedor`))
@@ -206,9 +206,9 @@ CREATE TABLE IF NOT EXISTS `erp`.`productos` (
   `stock_producto` INT NULL DEFAULT NULL,
   `ESTADO` TINYINT NULL DEFAULT '1',
   PRIMARY KEY (`id_producto`, `id_tipo_producto`),
-  INDEX `fk_productos_tipos_productos1` (`id_tipo_producto` ASC) VISIBLE,
-  INDEX `fk_productos_impuestos1` (`id_impuesto` ASC) VISIBLE,
-  INDEX `fk_productos_categorias1` (`id_categoria` ASC) VISIBLE,
+  INDEX `fk_productos_tipos_productos1` (`id_tipo_producto` ASC) ,
+  INDEX `fk_productos_impuestos1` (`id_impuesto` ASC) ,
+  INDEX `fk_productos_categorias1` (`id_categoria` ASC) ,
   CONSTRAINT `fk_productos_categorias1`
     FOREIGN KEY (`id_categoria`)
     REFERENCES `erp`.`categorias` (`id_categoria`),
@@ -234,8 +234,8 @@ CREATE TABLE IF NOT EXISTS `erp`.`cotizaciones_detalle` (
   `cantidad_cotizacion` INT NULL DEFAULT NULL,
   `precio_unitario_cotizacion` DOUBLE NULL DEFAULT NULL,
   PRIMARY KEY (`id_cotizacion_detalle`, `id_cotizacion_encabezado`, `id_proveedor`, `id_producto`),
-  INDEX `fk_cotizaciones_detalle_cotizaciones_encabezado1` (`id_cotizacion_encabezado` ASC, `id_proveedor` ASC) VISIBLE,
-  INDEX `fk_cotizaciones_detalle_productos1` (`id_producto` ASC) VISIBLE,
+  INDEX `fk_cotizaciones_detalle_cotizaciones_encabezado1` (`id_cotizacion_encabezado` ASC, `id_proveedor` ASC) ,
+  INDEX `fk_cotizaciones_detalle_productos1` (`id_producto` ASC) ,
   CONSTRAINT `fk_cotizaciones_detalle_cotizaciones_encabezado1`
     FOREIGN KEY (`id_cotizacion_encabezado` , `id_proveedor`)
     REFERENCES `erp`.`cotizaciones_encabezado` (`id_cotizacion_encabezado` , `id_proveedor`),
@@ -262,7 +262,7 @@ CREATE TABLE IF NOT EXISTS `erp`.`ordenes_compras_encabezado` (
   `entregado` INT NULL DEFAULT NULL,
   `ESTADO` TINYINT NULL DEFAULT '1',
   PRIMARY KEY (`id_orden_compra_encabezado`, `id_cotizacion_encabezado`, `id_proveedor`),
-  INDEX `fk_ordenes_compras_encabezado_cotizaciones_encabezado1` (`id_cotizacion_encabezado` ASC, `id_proveedor` ASC) VISIBLE,
+  INDEX `fk_ordenes_compras_encabezado_cotizaciones_encabezado1` (`id_cotizacion_encabezado` ASC, `id_proveedor` ASC) ,
   CONSTRAINT `fk_ordenes_compras_encabezado_cotizaciones_encabezado1`
     FOREIGN KEY (`id_cotizacion_encabezado` , `id_proveedor`)
     REFERENCES `erp`.`cotizaciones_encabezado` (`id_cotizacion_encabezado` , `id_proveedor`))
@@ -287,8 +287,8 @@ CREATE TABLE IF NOT EXISTS `erp`.`creditos_pedidos_encabezado` (
   `limite_cuotas` INT NULL DEFAULT NULL,
   `ESTADO` TINYINT NULL DEFAULT '1',
   PRIMARY KEY (`id_credito_pedido_encabezado`, `id_orden_compra_encabezado`, `id_cotizacion_encabezado`, `id_proveedor`),
-  INDEX `fk_creditos_pedidos_encabezado_ordenes_compras_encabezado1` (`id_orden_compra_encabezado` ASC, `id_cotizacion_encabezado` ASC, `id_proveedor` ASC) VISIBLE,
-  INDEX `fk_creditos_pedidos_encabezado_bancos` (`id_banco` ASC) VISIBLE,
+  INDEX `fk_creditos_pedidos_encabezado_ordenes_compras_encabezado1` (`id_orden_compra_encabezado` ASC, `id_cotizacion_encabezado` ASC, `id_proveedor` ASC) ,
+  INDEX `fk_creditos_pedidos_encabezado_bancos` (`id_banco` ASC) ,
   CONSTRAINT `fk_creditos_pedidos_encabezado_bancos`
     FOREIGN KEY (`id_banco`)
     REFERENCES `erp`.`bancos` (`PK_idBanco`),
@@ -323,7 +323,7 @@ CREATE TABLE IF NOT EXISTS `erp`.`cuentas` (
   `descripcion` VARCHAR(45) NULL DEFAULT NULL,
   `estado` TINYINT NULL DEFAULT '1',
   PRIMARY KEY (`id_cuenta`, `id_tipo_cuenta`),
-  INDEX `fk_tbl_cuentas_contables_tbl_tipoCuentaContable1_idx` (`id_tipo_cuenta` ASC) VISIBLE,
+  INDEX `fk_tbl_cuentas_contables_tbl_tipoCuentaContable1_idx` (`id_tipo_cuenta` ASC) ,
   CONSTRAINT `fk_tbl_cuentas_contables_tbl_tipoCuentaContable1`
     FOREIGN KEY (`id_tipo_cuenta`)
     REFERENCES `erp`.`tipo_cuentas` (`id_tipo_cuenta`)
@@ -348,8 +348,8 @@ CREATE TABLE IF NOT EXISTS `erp`.`creditos_pedidos_detalle` (
   `valor` DOUBLE NULL DEFAULT NULL,
   `tipo_movimiento` INT NULL DEFAULT NULL,
   PRIMARY KEY (`id_credito_pedido_detalle`, `id_credito_pedido_encabezado`, `id_orden_compra_encabezado`, `id_cotizacion_encabezado`, `id_proveedor`),
-  INDEX `fk_creditos_pedidos_detalle_creditos_pedidos_encabezado1` (`id_credito_pedido_encabezado` ASC, `id_orden_compra_encabezado` ASC, `id_cotizacion_encabezado` ASC, `id_proveedor` ASC) VISIBLE,
-  INDEX `fk_creditos_pedidos_detalle_cuentas1` (`tipo_movimiento` ASC) VISIBLE,
+  INDEX `fk_creditos_pedidos_detalle_creditos_pedidos_encabezado1` (`id_credito_pedido_encabezado` ASC, `id_orden_compra_encabezado` ASC, `id_cotizacion_encabezado` ASC, `id_proveedor` ASC) ,
+  INDEX `fk_creditos_pedidos_detalle_cuentas1` (`tipo_movimiento` ASC) ,
   CONSTRAINT `fk_creditos_pedidos_detalle_creditos_pedidos_encabezado1`
     FOREIGN KEY (`id_credito_pedido_encabezado` , `id_orden_compra_encabezado` , `id_cotizacion_encabezado` , `id_proveedor`)
     REFERENCES `erp`.`creditos_pedidos_encabezado` (`id_credito_pedido_encabezado` , `id_orden_compra_encabezado` , `id_cotizacion_encabezado` , `id_proveedor`),
@@ -372,7 +372,7 @@ CREATE TABLE IF NOT EXISTS `erp`.`devoluciones` (
   `razon_devolucion` TEXT NULL DEFAULT NULL,
   `ESTADO` TINYINT NULL DEFAULT '1',
   PRIMARY KEY (`id_devolucion`, `id_orden_compra_encabezado`, `id_cotizacion_encabezado`, `id_proveedor`),
-  INDEX `fk_devoluciones_ordenes_compras_encabezado1` (`id_orden_compra_encabezado` ASC, `id_cotizacion_encabezado` ASC, `id_proveedor` ASC) VISIBLE,
+  INDEX `fk_devoluciones_ordenes_compras_encabezado1` (`id_orden_compra_encabezado` ASC, `id_cotizacion_encabezado` ASC, `id_proveedor` ASC) ,
   CONSTRAINT `fk_devoluciones_ordenes_compras_encabezado1`
     FOREIGN KEY (`id_orden_compra_encabezado` , `id_cotizacion_encabezado` , `id_proveedor`)
     REFERENCES `erp`.`ordenes_compras_encabezado` (`id_orden_compra_encabezado` , `id_cotizacion_encabezado` , `id_proveedor`))
@@ -409,7 +409,7 @@ CREATE TABLE IF NOT EXISTS `erp`.`inventarios` (
   `existencia_inventario` INT NULL DEFAULT NULL,
   `ESTADO` TINYINT NULL DEFAULT '1',
   PRIMARY KEY (`id_producto`, `id_bodega`),
-  INDEX `fk_inventarios_bodegas1` (`id_bodega` ASC) VISIBLE,
+  INDEX `fk_inventarios_bodegas1` (`id_bodega` ASC) ,
   CONSTRAINT `fk_inventarios_bodegas1`
     FOREIGN KEY (`id_bodega`)
     REFERENCES `erp`.`bodegas` (`id_bodega`),
@@ -476,10 +476,10 @@ CREATE TABLE IF NOT EXISTS `erp`.`ordenes_transportes` (
   `fecha_llegada` DATE NULL DEFAULT NULL,
   `ESTADO` TINYINT NULL DEFAULT '1',
   PRIMARY KEY (`id_orden_transporte`),
-  INDEX `fk_ordenes_transportes_encabezado_vehiculos1` (`id_vehiculo` ASC) VISIBLE,
-  INDEX `fk_ordenes_transportes_encabezado_bodegas1` (`bodega_origen` ASC) VISIBLE,
-  INDEX `fk_ordenes_transportes_encabezado_bodegas2` (`bodega_destino` ASC) VISIBLE,
-  INDEX `fk_ordenes_transportes_documentos1` (`documentos_id_documento` ASC) VISIBLE,
+  INDEX `fk_ordenes_transportes_encabezado_vehiculos1` (`id_vehiculo` ASC) ,
+  INDEX `fk_ordenes_transportes_encabezado_bodegas1` (`bodega_origen` ASC) ,
+  INDEX `fk_ordenes_transportes_encabezado_bodegas2` (`bodega_destino` ASC) ,
+  INDEX `fk_ordenes_transportes_documentos1` (`documentos_id_documento` ASC) ,
   CONSTRAINT `fk_ordenes_transportes_documentos1`
     FOREIGN KEY (`documentos_id_documento`)
     REFERENCES `erp`.`documentos` (`id_documento`),
@@ -507,7 +507,7 @@ CREATE TABLE IF NOT EXISTS `erp`.`tipos_movimientos` (
   `signo` VARCHAR(1) NULL DEFAULT NULL,
   `estado` TINYINT NULL DEFAULT '1',
   PRIMARY KEY (`id_tipo_movimiento`, `id_cuenta`),
-  INDEX `fk_tipos_movimientos_cuentas` (`id_cuenta` ASC) VISIBLE,
+  INDEX `fk_tipos_movimientos_cuentas` (`id_cuenta` ASC) ,
   CONSTRAINT `fk_tipos_movimientos_cuentas`
     FOREIGN KEY (`id_cuenta`)
     REFERENCES `erp`.`cuentas` (`id_cuenta`))
@@ -530,10 +530,10 @@ CREATE TABLE IF NOT EXISTS `erp`.`movimientos_inventario_encabezado` (
   `id_orden_transporte_encabezado` INT NULL DEFAULT NULL,
   `ESTADO` TINYINT NULL DEFAULT '1',
   PRIMARY KEY (`id_movimiento_inventario_encabezado`),
-  INDEX `fk_movimientos_inventario_encabezado_bodegas1` (`bodaga_salida` ASC) VISIBLE,
-  INDEX `fk_movimientos_inventario_encabezado_bodegas2` (`bodega_entrada` ASC) VISIBLE,
-  INDEX `fk_movimientos_inventario_encabezado_ordenes_transportes_enca1` (`id_orden_transporte_encabezado` ASC) VISIBLE,
-  INDEX `fk_creditos_pedidos_detalle_cuentas` (`id_tipo_movimiento` ASC) VISIBLE,
+  INDEX `fk_movimientos_inventario_encabezado_bodegas1` (`bodaga_salida` ASC) ,
+  INDEX `fk_movimientos_inventario_encabezado_bodegas2` (`bodega_entrada` ASC) ,
+  INDEX `fk_movimientos_inventario_encabezado_ordenes_transportes_enca1` (`id_orden_transporte_encabezado` ASC) ,
+  INDEX `fk_creditos_pedidos_detalle_cuentas` (`id_tipo_movimiento` ASC) ,
   CONSTRAINT `fk_creditos_pedidos_detalle_cuentas`
     FOREIGN KEY (`id_tipo_movimiento`)
     REFERENCES `erp`.`cuentas` (`id_cuenta`),
@@ -565,8 +565,8 @@ CREATE TABLE IF NOT EXISTS `erp`.`movimientos_inventario_detalle` (
   `costo_producto` DOUBLE NULL DEFAULT NULL,
   `precio_producto` DOUBLE NULL DEFAULT NULL,
   PRIMARY KEY (`id_movimiento_inventario_detalle`, `id_movimiento_inventario_encabezado`),
-  INDEX `fk_movimientos_inventario_encabezado_productos1` (`id_producto` ASC) VISIBLE,
-  INDEX `fk_movimientos_inventario_encabezado_movimientos_inventario_e1` (`id_movimiento_inventario_encabezado` ASC) VISIBLE,
+  INDEX `fk_movimientos_inventario_encabezado_productos1` (`id_producto` ASC) ,
+  INDEX `fk_movimientos_inventario_encabezado_movimientos_inventario_e1` (`id_movimiento_inventario_encabezado` ASC) ,
   CONSTRAINT `fk_movimientos_inventario_encabezado_movimientos_inventario_e1`
     FOREIGN KEY (`id_movimiento_inventario_encabezado`)
     REFERENCES `erp`.`movimientos_inventario_encabezado` (`id_movimiento_inventario_encabezado`),
@@ -590,8 +590,8 @@ CREATE TABLE IF NOT EXISTS `erp`.`ordenes_compras_detalle` (
   `cantidad` INT NULL DEFAULT NULL,
   `precio_unitario` DOUBLE NULL DEFAULT NULL,
   PRIMARY KEY (`id_orden_compra_detalle`, `id_orden_compra_encabezado`, `id_cotizacion_encabezado`, `id_proveedor`, `id_producto`),
-  INDEX `fk_ordenes_compras_detalle_ordenes_compras_encabezado1` (`id_orden_compra_encabezado` ASC, `id_cotizacion_encabezado` ASC, `id_proveedor` ASC) VISIBLE,
-  INDEX `fk_ordenes_compras_detalle_productos1` (`id_producto` ASC) VISIBLE,
+  INDEX `fk_ordenes_compras_detalle_ordenes_compras_encabezado1` (`id_orden_compra_encabezado` ASC, `id_cotizacion_encabezado` ASC, `id_proveedor` ASC) ,
+  INDEX `fk_ordenes_compras_detalle_productos1` (`id_producto` ASC) ,
   CONSTRAINT `fk_ordenes_compras_detalle_ordenes_compras_encabezado1`
     FOREIGN KEY (`id_orden_compra_encabezado` , `id_cotizacion_encabezado` , `id_proveedor`)
     REFERENCES `erp`.`ordenes_compras_encabezado` (`id_orden_compra_encabezado` , `id_cotizacion_encabezado` , `id_proveedor`),
@@ -640,8 +640,8 @@ CREATE TABLE IF NOT EXISTS `erp`.`presupuestos_detalle` (
   `id_proveedor` INT NOT NULL,
   `fecha_presupuesto` DATE NULL DEFAULT NULL,
   PRIMARY KEY (`id_presupuesto_detalle`, `id_presupuesto_encabezado`, `id_cotizacion_encabezado`, `id_proveedor`),
-  INDEX `fk_presupuestos_detalle_cotizaciones_encabezado1` (`id_cotizacion_encabezado` ASC, `id_proveedor` ASC) VISIBLE,
-  INDEX `fk_presupuestos_detalle_presupuestos_encabezado1` (`id_presupuesto_encabezado` ASC) VISIBLE,
+  INDEX `fk_presupuestos_detalle_cotizaciones_encabezado1` (`id_cotizacion_encabezado` ASC, `id_proveedor` ASC) ,
+  INDEX `fk_presupuestos_detalle_presupuestos_encabezado1` (`id_presupuesto_encabezado` ASC) ,
   CONSTRAINT `fk_presupuestos_detalle_cotizaciones_encabezado1`
     FOREIGN KEY (`id_cotizacion_encabezado` , `id_proveedor`)
     REFERENCES `erp`.`cotizaciones_encabezado` (`id_cotizacion_encabezado` , `id_proveedor`),
@@ -659,7 +659,7 @@ CREATE TABLE IF NOT EXISTS `erp`.`productos_lineas` (
   `id_producto` INT NOT NULL,
   `id_linea` INT NOT NULL,
   PRIMARY KEY (`id_producto`, `id_linea`),
-  INDEX `fk_productos_has_lineas_lineas1` (`id_linea` ASC) VISIBLE,
+  INDEX `fk_productos_has_lineas_lineas1` (`id_linea` ASC) ,
   CONSTRAINT `fk_productos_has_lineas_lineas1`
     FOREIGN KEY (`id_linea`)
     REFERENCES `erp`.`lineas` (`id_linea`),
@@ -677,7 +677,7 @@ CREATE TABLE IF NOT EXISTS `erp`.`productos_marcas` (
   `id_producto` INT NOT NULL,
   `id_marca` INT NOT NULL,
   PRIMARY KEY (`id_producto`, `id_marca`),
-  INDEX `fk_productos_has_marcas_marcas1` (`id_marca` ASC) VISIBLE,
+  INDEX `fk_productos_has_marcas_marcas1` (`id_marca` ASC) ,
   CONSTRAINT `fk_productos_has_marcas_marcas1`
     FOREIGN KEY (`id_marca`)
     REFERENCES `erp`.`marcas` (`id_marca`),
@@ -695,7 +695,7 @@ CREATE TABLE IF NOT EXISTS `erp`.`productos_presentaciones` (
   `id_producto` INT NOT NULL,
   `id_presentacion` INT NOT NULL,
   PRIMARY KEY (`id_producto`, `id_presentacion`),
-  INDEX `fk_productos_has_presentaciones_presentaciones1` (`id_presentacion` ASC) VISIBLE,
+  INDEX `fk_productos_has_presentaciones_presentaciones1` (`id_presentacion` ASC) ,
   CONSTRAINT `fk_productos_has_presentaciones_presentaciones1`
     FOREIGN KEY (`id_presentacion`)
     REFERENCES `erp`.`presentaciones` (`id_presentacion`),
@@ -713,7 +713,7 @@ CREATE TABLE IF NOT EXISTS `erp`.`productos_proveedores` (
   `id_producto` INT NOT NULL,
   `id_proveedor` INT NOT NULL,
   PRIMARY KEY (`id_producto`, `id_proveedor`),
-  INDEX `fk_productos_has_proveedores_proveedores1` (`id_proveedor` ASC) VISIBLE,
+  INDEX `fk_productos_has_proveedores_proveedores1` (`id_proveedor` ASC) ,
   CONSTRAINT `fk_productos_has_proveedores_productos`
     FOREIGN KEY (`id_producto`)
     REFERENCES `erp`.`productos` (`id_producto`),
