@@ -259,7 +259,7 @@ COMMIT;
 
 
 INSERT INTO `tbl_modulo` VALUES (1,'SIC',' ',1),(1000,'SCM',' ',1);
-INSERT INTO `tbl_usuario` VALUES ('usu',' ',' ','25d55ad283aa400af464c76d713c07ad',NULL,1);
+INSERT INTO `tbl_usuario` VALUES ('usu',' ',' ','550e1bafe077ff0b0b67f4e32f29d751',1,1);
 INSERT INTO `tbl_aplicacion` VALUES (1,1,'mant',' ',1),(1001,1000,'Mantenimientos',' ',1),(1002,1000,'Movimientos de Inventario',' ',1),(1003,1000,'Ordenes de Compra',' ',1),(1004,1000,'Cotizaciones',' ',1);
 INSERT INTO `tbl_perfil_encabezado` VALUES (1,'Adim',' ',1);
 INSERT INTO `tbl_perfil_detalle` VALUES (1,1,1,1,1,1,1),(1,1001,1,1,1,1,1),(1,1002,1,1,1,1,1),(1,1003,1,1,1,1,1),(1,1004,1,1,1,1,1);
